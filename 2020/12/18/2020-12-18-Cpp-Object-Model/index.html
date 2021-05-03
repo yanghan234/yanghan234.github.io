@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <script>
+  var _hmt = _hmt || []
+  ;(function() {
+    var hm = document.createElement('script')
+    hm.src = 'https://hm.baidu.com/hm.js?5a0acc897fd96474a2c8f4deac84611a'
+    var s = document.getElementsByTagName('script')[0]
+    s.parentNode.insertBefore(hm, s)
+  })()
+</script> 
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    
+    <title>
+      C++对象模型(上) - Han&#39;s Blog
+    </title>
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    
+<link rel="stylesheet" href="/style/style.css">
+
+  <meta name="generator" content="Hexo 5.4.0"></head>
+  <body>
+    <canvas id='pagemap'></canvas>
+    
+    <div id="post-toc" class="animated hiddenToc hide">
+      <span class="title">Toc</span>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B2%A1%E6%9C%89%E8%99%9A%E5%87%BD%E6%95%B0%E7%9A%84%E7%B1%BB"><span class="toc-text">没有虚函数的类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AA%E6%9C%89%E4%B8%80%E4%B8%AA%E8%99%9A%E5%87%BD%E6%95%B0%E7%9A%84%E7%B1%BB"><span class="toc-text">只有一个虚函数的类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%89%E8%8B%A5%E5%B9%B2%E8%99%9A%E5%87%BD%E6%95%B0%E7%9A%84%E7%B1%BB"><span class="toc-text">有若干虚函数的类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8C%E4%B8%80%E4%B8%AA%E7%B1%BB%E7%9A%84%E4%B8%8D%E5%90%8C%E5%AF%B9%E8%B1%A1"><span class="toc-text">同一个类的不同对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%90%AB%E8%99%9A%E5%87%BD%E6%95%B0%E7%9A%84%E7%B1%BB%E7%BB%A7%E6%89%BF%E5%90%AB%E6%9C%89%E8%99%9A%E5%87%BD%E6%95%B0%E7%9A%84%E7%B1%BB"><span class="toc-text">不含虚函数的类继承含有虚函数的类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E5%86%99%E4%BA%86%E5%9F%BA%E7%B1%BB%E8%99%9A%E5%87%BD%E6%95%B0%E7%9A%84%E7%BB%A7%E6%89%BF"><span class="toc-text">重写了基类虚函数的继承</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E4%BA%86%E6%96%B0%E7%9A%84%E8%99%9A%E5%87%BD%E6%95%B0%E7%9A%84%E6%B4%BE%E7%94%9F%E7%B1%BB"><span class="toc-text">定义了新的虚函数的派生类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%B1%BB%E4%B8%8D%E5%90%AB%E8%99%9A%E5%87%BD%E6%95%B0%E4%B8%94%E6%B4%BE%E7%94%9F%E7%B1%BB%E5%AE%9A%E4%B9%89%E4%BA%86%E8%99%9A%E5%87%BD%E6%95%B0"><span class="toc-text">基类不含虚函数且派生类定义了虚函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8C%E6%97%B6%E7%BB%A7%E6%89%BF%E5%8C%85%E5%90%AB%E8%99%9A%E5%87%BD%E6%95%B0%E5%92%8C%E4%B8%8D%E5%90%AB%E8%99%9A%E5%87%BD%E6%95%B0%E7%9A%84%E5%9F%BA%E7%B1%BB"><span class="toc-text">同时继承包含虚函数和不含虚函数的基类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF%E5%A4%9A%E4%B8%AA%E5%8C%85%E5%90%AB%E8%99%9A%E5%87%BD%E6%95%B0%E7%9A%84%E7%B1%BB"><span class="toc-text">继承多个包含虚函数的类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-text">小结</span></a>
+    </div>
+    
+    <div id="fixed-menu-wrap">
+      <span class="iconfont icon-sousuo search-box menu-reset"></span>
+      <span class="icon-toc menu-reset">Toc</span>
+      <span class="iconfont icon-arrowup menu-reset"></span>
+    </div>
+    <div id="fixed-menu">
+      <span class="iconfont icon-menu-"></span>
+    </div>
+    <div id="progress">
+      <div class="line"></div>
+    </div>
+    <div id="search-shade" class="animated hiddenSearch hide">
+      <div class="input-wrap">
+        <span class="iconfont icon-sousuo search-box"></span>
+        <input type="text" placeholder="Search" />
+        <span class="iconfont icon-close"></span>
+      </div>
+      <div class="search-result">
+        <div class="meta">
+          <span><b id="result-count">0</b> results found</span>
+          <img src="/images/logo.jpeg" />
+        </div>
+        <ul id="result-box"></ul>
+      </div>
+    </div>
+    <div id="menu-mask" class="animated hideMenuMask hide">
+      <span class="iconfont icon-close"></span>
+      <div class="nav">
+        
+        <a href="/" class="">
+          Home
+        </a>
+        
+        <a href="/archives" class="">
+          Archives
+        </a>
+        
+        <a href="/categories" class="">
+          Categories
+        </a>
+        
+        <a href="/tags" class="">
+          Tags
+        </a>
+        
+        <a href="/science" class="">
+          Science
+        </a>
+        
+        <a href="/about" class="">
+          About
+        </a>
+        
+      </div>
+    </div>
+    <div id="header">
+      <div class="intro">
+        <a href="/" class="logo" style="background-image: url('/images/logo.jpeg')"></a>
+        <div class="author"></div>
+      </div>
+      <div class="nav">
+        <span class="iconfont icon-menu menu-icon"></span>
+        <a href="#" class="search-box">
+          <span class="iconfont icon-sousuo"></span>
+        </a>
+      </div>
+    </div>
+    <div id="side" class="animated bounceInLeft">
+      <div class="shrink">
+        <a href="/" class="logo" style="background-image: url('/images/logo.jpeg')"></a>
+        <span class="iconfont icon-menu toggle-icon"></span>
+        <a href="#" class="search-box">
+          <span class="iconfont icon-sousuo"></span>
+        </a>
+      </div>
+      <div class="magnify">
+        <div class="about">
+          <div class="author"></div>
+          <a href="/" class="logo" style="background-image: url('/images/logo.jpeg')"></a>
+        </div>
+
+        <div class="nav">
+          
+          <a href="/" class="">
+            Home
+          </a>
+          
+          <a href="/archives" class="">
+            Archives
+          </a>
+          
+          <a href="/categories" class="">
+            Categories
+          </a>
+          
+          <a href="/tags" class="">
+            Tags
+          </a>
+          
+          <a href="/science" class="">
+            Science
+          </a>
+          
+          <a href="/about" class="">
+            About
+          </a>
+          
+          <a href="#" class="search-box">
+            <span class="iconfont icon-sousuo"></span>
+          </a>
+        </div>
+        <div class="bottom">
+          <div class="follow">
+            
+            <a href="https://github.com/yanghan234" target="_block">
+              <span class="iconfont icon-github"></span>
+            </a>
+             
+            <a href="/atom.xml" target="_block">
+              <span class="iconfont icon-rss"></span>
+            </a>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="container">
+      <div class="main animated bounceInRight delay-0.7s">
+        <article class="post-entry">
+    <div class="header">
+      
+      <div class="title">C++对象模型(上)</div>
+      <div class="meta">
+        <span class="item">
+          <span class="iconfont icon-time-circle"></span>
+          <span>2020/12/18</span>
+        </span>
+
+        
+
+         
+        <span class="item">
+          <span class="iconfont icon-folder"></span>
+          <span>
+              
+                
+                  <a href="/categories/ComputerScience">ComputerScience</a>
+                
+              
+                
+                  <a href="/categories/Study">Study</a>
+                
+              
+          </span>
+        </span>
+        
+        
+         
+          <span class="item">
+            <span class="iconfont icon-tag1"></span>
+            <span>
+                
+                  
+                    <a href="/tags/Cpp">Cpp</a>
+                  
+                
+            </span>
+          </span>
+         
+      </div>
+      <div>
+      </div>
+    </div>
+    <html><head></head><body><p>本文总结了C++中的虚函数机制。</p>
+<p>C++中的虚函数机制是实现多态的基础，因此有必要理解虚函数的具体实现。接下来我们逐层深入，讨论不同情形下的虚函数。在讨论过程中我们需要用到头文件<code>cstddef</code>中定义的宏<code>offsefof(Type,Member)</code>来获取某个成员的偏移量。</p>
+<h3 id="没有虚函数的类">没有虚函数的类<a class="post-anchor" href="#没有虚函数的类"></a></h3><p>下面这段代码中定义了一个不包含虚函数的类。这个类中包含了一个non-virtual函数<code>func1</code>，一个静态non-virtual函数<code>func2</code>和一个静态成员变量<code>i</code>，并且他们的定义均在成员变量<code>j</code>之前。但我们变量<code>j</code>的偏移量仍然为0，并且<code>sizeof(Foo)</code>的结果为4个字节。这是因为上面定义的几种函数和变量均放在对象之外，例如静态成员变量放在静态区，所以他们并不会影响类中成员变量的存储。可见，在没有虚函数的情况下，与C中的结构体struct相比，C++中并不会因为在类中封装了函数而产生额外的负担。</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstddef&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Foo</span></span><br><span class="hljs-class">{</span><br>    <span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">func1</span><span class="hljs-params">()</span> </span>{};<br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">func2</span><span class="hljs-params">()</span> </span>{};<br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> i;<br>    <span class="hljs-keyword">int</span> j;<br>};<br><br><span class="hljs-keyword">int</span> Foo::i = <span class="hljs-number">0</span>;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>{<br>    cout &lt;&lt; <span class="hljs-built_in">offsetof</span>(Foo,j) &lt;&lt; endl; <span class="hljs-comment">//输出0</span><br>    cout &lt;&lt; <span class="hljs-built_in"><span class="hljs-keyword">sizeof</span></span>(Foo) &lt;&lt; endl; <span class="hljs-comment">// 输出4</span><br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>在接下来的讨论中，我不在考虑上面提到的几种函数和静态变量，因为他们不对C++对象的大小和成员的偏移量产生影响。</p>
+<h3 id="只有一个虚函数的类">只有一个虚函数的类<a class="post-anchor" href="#只有一个虚函数的类"></a></h3><p>下面的类<code>Foo</code>中包含两个整数和一个虚函数，我们查看了类的大小和两个数据的偏移量。</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstddef&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Foo</span></span><br><span class="hljs-class">{</span><br>    <span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> i;<br>    <span class="hljs-keyword">int</span> j;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">func</span><span class="hljs-params">()</span> </span>{};<br>};<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>{<br>    cout &lt;&lt; <span class="hljs-built_in"><span class="hljs-keyword">sizeof</span></span>(Foo) &lt;&lt; endl;     <span class="hljs-comment">// 输出 16</span><br>    cout &lt;&lt; <span class="hljs-built_in">offsetof</span>(Foo,i) &lt;&lt; endl; <span class="hljs-comment">// 输出 8</span><br>    cout &lt;&lt; <span class="hljs-built_in">offsetof</span>(Foo,j) &lt;&lt; endl; <span class="hljs-comment">// 输出 12</span><br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>不同的机器上输出结果可能会不同。我的MBP按照64位编译，并且似乎已经不支持模拟32位编译，因此在我的机器上一个指针占用8个字节。在其它的机器上可以用下面的命令按照32位编译，这样一个指针占用4个字节。</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">g++ -m32 xxx.cpp // 按32位编译<br></code></pre></td></tr></tbody></table></figure>
+<p>offsetof宏作用在包含虚函数的类上会有Warning，但不影响运行。</p>
+<p>我们注意到，在拥有一个虚函数后，<code>Foo</code>的大小是16个字节，而两个<code>int</code>的大小应该是8个字节。尽管<code>i</code>是<code>Foo</code>中首先出现的变量，但<code>i</code>的偏移量不再是0，而变成了8。</p>
+<p>为了能够处理虚函数机制，含有虚函数的对象会在内存的开头防止一个虚指针<code>__vptr</code>指向一个虚函数表<code>vtbl</code>。因此，上面我们得到的<code>i</code>的偏移量是8个字节，即虚指针的大小。</p>
+<p><a href="/images/2020-12-18/class-with-one-virtual.png" data-caption="Class with one virtual function" data-fancybox="images"><img src="/images/2020-12-18/class-with-one-virtual.png" alt="Class with one virtual function"></a></p>
+<h3 id="有若干虚函数的类">有若干虚函数的类<a class="post-anchor" href="#有若干虚函数的类"></a></h3><p>下面的类中定义了两个虚函数，但并没有影响到类的大小和成员变量的偏移量。</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstddef&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Foo</span></span><br><span class="hljs-class">{</span><br>    <span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> i;<br>    <span class="hljs-keyword">int</span> j;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">func1</span><span class="hljs-params">()</span> </span>{};<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">func2</span><span class="hljs-params">()</span> </span>{};<br>};<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>{<br>    cout &lt;&lt; <span class="hljs-built_in"><span class="hljs-keyword">sizeof</span></span>(Foo) &lt;&lt; endl;     <span class="hljs-comment">// 16</span><br>    cout &lt;&lt; <span class="hljs-built_in">offsetof</span>(Foo,i) &lt;&lt; endl; <span class="hljs-comment">//  8</span><br>    cout &lt;&lt; <span class="hljs-built_in">offsetof</span>(Foo,j) &lt;&lt; endl; <span class="hljs-comment">// 12</span><br>}<br></code></pre></td></tr></tbody></table></figure>
+
+<p>类中的虚函数都会放到虚函数表中，而不会再对象中增加新的指针。<br><a href="/images/2020-12-18/class-with-two-virtual.png" data-caption="Class with two virtual functions" data-fancybox="images"><img src="/images/2020-12-18/class-with-two-virtual.png" alt="Class with two virtual functions"></a></p>
+<h3 id="同一个类的不同对象">同一个类的不同对象<a class="post-anchor" href="#同一个类的不同对象"></a></h3><p>对于含有虚函数的类，它的每一个对象都会拥有一个虚指针<code>__vptr</code>，并且这些虚指针指向同一个虚函数表<br><a href="/images/2020-12-18/multiple-objects-of-same-class.png" data-caption="Multiple objects of same class" data-fancybox="images"><img src="/images/2020-12-18/multiple-objects-of-same-class.png" alt="Multiple objects of same class"></a><br>虚函数表在编译器生成，只保存一份。每当新的对象被创建，编译器都会讲其中的虚指针指向这个虚函数表。</p>
+<h3 id="不含虚函数的类继承含有虚函数的类">不含虚函数的类继承含有虚函数的类<a class="post-anchor" href="#不含虚函数的类继承含有虚函数的类"></a></h3><p>这里“不含”虚函数是指，既没有重写基类中的虚函数，也没有定义新的虚函数。</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstddef&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Base</span></span><br><span class="hljs-class">{</span><br>    <span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> i;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">func</span><span class="hljs-params">()</span> </span>{}<br>};<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Deriv</span>:</span> <span class="hljs-keyword">public</span> Base<br>{<br>    <span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> j;<br>};<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>{<br>    cout &lt;&lt; <span class="hljs-built_in"><span class="hljs-keyword">sizeof</span></span>(Deriv) &lt;&lt; endl;      <span class="hljs-comment">// 16</span><br>    cout &lt;&lt; <span class="hljs-built_in">offsetof</span>(Deriv,i) &lt;&lt; endl;  <span class="hljs-comment">//  8</span><br>    cout &lt;&lt; <span class="hljs-built_in">offsetof</span>(Deriv,j) &lt;&lt; endl;  <span class="hljs-comment">// 12</span><br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>Deriv的对象首先存储虚指针，其次是Base类中的数据i，最后是Deriv中的数据j.下图中的不同颜色，表示来自不同的类。<br><a href="/images/2020-12-18/inheritance1.png" data-caption="Class without virtual inherits class with virtual" data-fancybox="images"><img src="/images/2020-12-18/inheritance1.png" alt="Class without virtual inherits class with virtual"></a></p>
+<h3 id="重写了基类虚函数的继承">重写了基类虚函数的继承<a class="post-anchor" href="#重写了基类虚函数的继承"></a></h3><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstddef&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Base</span></span><br><span class="hljs-class">{</span><br>    <span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> i;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">func1</span><span class="hljs-params">()</span> </span>{}<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">func2</span><span class="hljs-params">()</span> </span>{}<br>};<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Deriv</span>:</span> <span class="hljs-keyword">public</span> Base<br>{<br>    <span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> j;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">func1</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span> </span>{} <span class="hljs-comment">// 重写</span><br>};<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>{<br>    cout &lt;&lt; <span class="hljs-built_in"><span class="hljs-keyword">sizeof</span></span>(Deriv) &lt;&lt; endl;      <span class="hljs-comment">// 16</span><br>    cout &lt;&lt; <span class="hljs-built_in">offsetof</span>(Deriv,i) &lt;&lt; endl;  <span class="hljs-comment">//  8</span><br>    cout &lt;&lt; <span class="hljs-built_in">offsetof</span>(Deriv,j) &lt;&lt; endl;  <span class="hljs-comment">// 12</span><br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>在此种情形下，派生类的大小与前面一种情况相同。唯一的区别是，虚函数表中的函数指针被派生类重写的函数替代。<br><a href="/images/2020-12-18/inheritance2.png" data-caption="Class without virtual inherits class with virtual" data-fancybox="images"><img src="/images/2020-12-18/inheritance2.png" alt="Class without virtual inherits class with virtual"></a></p>
+<h3 id="定义了新的虚函数的派生类">定义了新的虚函数的派生类<a class="post-anchor" href="#定义了新的虚函数的派生类"></a></h3><p>如果派生类新增了基类没有的虚函数，则新增的虚函数会被放到基类虚函数表的最后，而不会产生一个新的虚指针和新的虚函数表。<br><a href="/images/2020-12-18/inheritance3.png" data-caption="Class without virtual inherits class with virtual" data-fancybox="images"><img src="/images/2020-12-18/inheritance3.png" alt="Class without virtual inherits class with virtual"></a></p>
+<h3 id="基类不含虚函数且派生类定义了虚函数">基类不含虚函数且派生类定义了虚函数<a class="post-anchor" href="#基类不含虚函数且派生类定义了虚函数"></a></h3><p>下面这个例子中基类只包含一个整数，因此大小为4个字节，且整数的偏移量为0。派生类中定义了一个整数和一个虚函数，此时派生类的大小变为16个字节，多出的8个字节来自于虚指针。值得注意的是，此时<code>i</code>的偏移量变成了8，也就是在虚指针之后。可见，虽然<code>i</code>的声明出现在虚函数之前，但最终虚指针却会被放在所有数据之前。</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstddef&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Base</span></span><br><span class="hljs-class">{</span><br>    <span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> i;<br>};<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Deriv</span>:</span> <span class="hljs-keyword">public</span> Base<br>{<br>    <span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> j;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">func</span><span class="hljs-params">()</span> </span>{}<br>};<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>{<br>    cout &lt;&lt; <span class="hljs-built_in"><span class="hljs-keyword">sizeof</span></span>(Base)      &lt;&lt; endl; <span class="hljs-comment">// 4</span><br>    cout &lt;&lt; <span class="hljs-built_in">offsetof</span>(Base,i)  &lt;&lt; endl; <span class="hljs-comment">// 0</span><br>    cout &lt;&lt; <span class="hljs-built_in"><span class="hljs-keyword">sizeof</span></span>(Deriv)     &lt;&lt; endl; <span class="hljs-comment">// 16</span><br>    cout &lt;&lt; <span class="hljs-built_in">offsetof</span>(Deriv,i) &lt;&lt; endl; <span class="hljs-comment">// 8</span><br>    cout &lt;&lt; <span class="hljs-built_in">offsetof</span>(Deriv,j) &lt;&lt; endl; <span class="hljs-comment">// 12</span><br>}<br></code></pre></td></tr></tbody></table></figure>
+
+<p><a href="/images/2020-12-18/inheritance4.png" data-caption="Class with virtual inherits class without virtual" data-fancybox="images"><img src="/images/2020-12-18/inheritance4.png" alt="Class with virtual inherits class without virtual"></a></p>
+<p>这种情况还可以推广到多继承的情形。如果一个派生类继承了多个基类，且每个基类都没有虚函数，在派生类中首先是虚指针，然后按照基类的继承顺序排列数据，最后是派生类中的数据。</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Deriv</span>:</span> <span class="hljs-keyword">public</span> Base1, <span class="hljs-keyword">public</span> Base2<br>{<br>    <span class="hljs-comment">// Base1, Base2, ... do not have virtual functions</span><br>    <span class="hljs-comment">// virtual func;</span><br>};<br></code></pre></td></tr></tbody></table></figure>
+<p><a href="/images/2020-12-18/inheritance5.png" data-caption="Class with virtual inherits multiple classes without virtual" data-fancybox="images"><img src="/images/2020-12-18/inheritance5.png" alt="Class with virtual inherits multiple classes without virtual"></a></p>
+<h3 id="同时继承包含虚函数和不含虚函数的基类">同时继承包含虚函数和不含虚函数的基类<a class="post-anchor" href="#同时继承包含虚函数和不含虚函数的基类"></a></h3><p>下面的例子中定义了两个基类<code>Base1</code>和<code>Base2</code>，他们各自含有两个整数（为了防止内存对其影响我们的讨论），其中<code>Base1</code>不含虚函数，<code>Base2</code>含有一个虚函数。派生类<code>Deriv</code>先后继承了<code>Base1</code>和<code>Base2</code>。</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstddef&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Base1</span></span><br><span class="hljs-class">{</span><br>    <span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> i1;<br>    <span class="hljs-keyword">int</span> i2;<br>};<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Base2</span></span><br><span class="hljs-class">{</span><br>    <span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> j1;<br>    <span class="hljs-keyword">int</span> j2;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">func</span><span class="hljs-params">()</span> </span>{}<br>};<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Deriv</span>:</span> <span class="hljs-keyword">public</span> Base1, <span class="hljs-keyword">public</span> Base2<br>{<br>    <span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> k1;<br>    <span class="hljs-keyword">int</span> k2;<br>};<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>{<br>    cout &lt;&lt; <span class="hljs-built_in"><span class="hljs-keyword">sizeof</span></span>(Base1)      &lt;&lt; endl; <span class="hljs-comment">// 8</span><br>    cout &lt;&lt; <span class="hljs-built_in">offsetof</span>(Base1,i1) &lt;&lt; endl; <span class="hljs-comment">// 0</span><br>    cout &lt;&lt; <span class="hljs-built_in">offsetof</span>(Base1,i2) &lt;&lt; endl; <span class="hljs-comment">// 4</span><br>    <br>    cout &lt;&lt; <span class="hljs-built_in"><span class="hljs-keyword">sizeof</span></span>(Base2)      &lt;&lt; endl; <span class="hljs-comment">// 16</span><br>    cout &lt;&lt; <span class="hljs-built_in">offsetof</span>(Base2,j1) &lt;&lt; endl; <span class="hljs-comment">// 8</span><br>    cout &lt;&lt; <span class="hljs-built_in">offsetof</span>(Base2,j2) &lt;&lt; endl; <span class="hljs-comment">// 12</span><br><br>    cout &lt;&lt; <span class="hljs-built_in"><span class="hljs-keyword">sizeof</span></span>(Deriv)      &lt;&lt; endl; <span class="hljs-comment">// 32</span><br>    cout &lt;&lt; <span class="hljs-built_in">offsetof</span>(Deriv,i1) &lt;&lt; endl; <span class="hljs-comment">// 16 </span><br>    cout &lt;&lt; <span class="hljs-built_in">offsetof</span>(Deriv,i2) &lt;&lt; endl; <span class="hljs-comment">// 20</span><br>    cout &lt;&lt; <span class="hljs-built_in">offsetof</span>(Deriv,j1) &lt;&lt; endl; <span class="hljs-comment">// 8</span><br>    cout &lt;&lt; <span class="hljs-built_in">offsetof</span>(Deriv,j2) &lt;&lt; endl; <span class="hljs-comment">// 12</span><br>    cout &lt;&lt; <span class="hljs-built_in">offsetof</span>(Deriv,k1) &lt;&lt; endl; <span class="hljs-comment">// 24</span><br>    cout &lt;&lt; <span class="hljs-built_in">offsetof</span>(Deriv,k2) &lt;&lt; endl; <span class="hljs-comment">// 28</span><br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>输出结果显示，<code>Base1</code>的大小为8，<code>Base2</code>的大小为16，<code>Deriv</code>的大小为32，这一点通过上面的讨论已经比较容易理解了。有意思的是他们数据的偏移量，可以看到，虽然在<code>Deriv</code>的声明中<code>Base1</code>被放在了<code>Base2</code>之前，但是内存中确实<code>Base2</code>的数据在<code>Base1</code>的数据之前。这是因为<code>Base1</code>不含虚函数，因此编译器会找到一个含有虚函数的类放在前面，这样虚指针会出现在<code>Deriv</code>类的最前面。<br><a href="/images/2020-12-18/inheritance6.png" data-caption="Inherit classes with and without virtual functions" data-fancybox="images"><img src="/images/2020-12-18/inheritance6.png" alt="Inherit classes with and without virtual functions"></a></p>
+<p>在上面这种情况下，如果派生类中重写了虚函数或者定义了新的虚函数，那么这些虚函数同样会被放到虚函数表中，没有特别的变化。例如下面图中，<code>Deriv</code>类重写了<code>Base2::func()</code>，同时又增加了一个虚函数<code>Deriv::func2()</code><br><a href="/images/2020-12-18/inheritance7.png" data-caption="Inherit classes with and without virtual functions" data-fancybox="images"><img src="/images/2020-12-18/inheritance7.png" alt="Inherit classes with and without virtual functions"></a></p>
+<h3 id="继承多个包含虚函数的类">继承多个包含虚函数的类<a class="post-anchor" href="#继承多个包含虚函数的类"></a></h3><p>下面的派生类<code>Deriv</code>继承了两个含有虚函数的基类<code>Base1</code>和<code>Base2</code>，且三个类都各自声明了两个整数，即<code>Deriv</code>类中一共包含6个整数，占据24个字节。</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstddef&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Base1</span></span><br><span class="hljs-class">{</span><br>    <span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> i1;<br>    <span class="hljs-keyword">int</span> i2;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">func1</span><span class="hljs-params">()</span> </span>{}<br>};<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Base2</span></span><br><span class="hljs-class">{</span><br>    <span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> j1;<br>    <span class="hljs-keyword">int</span> j2;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">func2</span><span class="hljs-params">()</span> </span>{}<br>};<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Deriv</span>:</span> <span class="hljs-keyword">public</span> Base1, <span class="hljs-keyword">public</span> Base2<br>{<br>    <span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> k1;<br>    <span class="hljs-keyword">int</span> k2;<br>};<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>{<br>    cout &lt;&lt; <span class="hljs-built_in"><span class="hljs-keyword">sizeof</span></span>(Deriv)      &lt;&lt; endl; <span class="hljs-comment">// 40</span><br>    cout &lt;&lt; <span class="hljs-built_in">offsetof</span>(Deriv,i1) &lt;&lt; endl; <span class="hljs-comment">// 8</span><br>    cout &lt;&lt; <span class="hljs-built_in">offsetof</span>(Deriv,i2) &lt;&lt; endl; <span class="hljs-comment">// 12</span><br>    cout &lt;&lt; <span class="hljs-built_in">offsetof</span>(Deriv,j1) &lt;&lt; endl; <span class="hljs-comment">// 24</span><br>    cout &lt;&lt; <span class="hljs-built_in">offsetof</span>(Deriv,j2) &lt;&lt; endl; <span class="hljs-comment">// 28</span><br>    cout &lt;&lt; <span class="hljs-built_in">offsetof</span>(Deriv,k1) &lt;&lt; endl; <span class="hljs-comment">// 32</span><br>    cout &lt;&lt; <span class="hljs-built_in">offsetof</span>(Deriv,k2) &lt;&lt; endl; <span class="hljs-comment">// 36</span><br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>从运行结果来看，<code>Deriv</code>类的大小为40个字节，而不是24+8=32个字节。原因在于两个基类都包含虚函数，所以<code>Deriv</code>类中含有两个虚指针。那么这两个基类在内存中的排布是怎样的呢？从偏移量来看，这次两个基类的顺序是与<code>Deriv</code>继承的顺序是一致的，这是因为<code>Base1</code>中已经包含虚指针，因此无需交换位置。在<code>Base1</code>之后，排布的是<code>Base2</code>的虚函数和数据，最后是<code>Deriv</code>的数据。</p>
+<p><a href="/images/2020-12-18/inheritance8.png" data-caption="Inherit multiple classes with virtual functions" data-fancybox="images"><img src="/images/2020-12-18/inheritance8.png" alt="Inherit multiple classes with virtual functions"></a></p>
+<p>如果再上述情况下，<code>Deriv</code>类重写了或者新增加了虚函数，那么这个虚函数该如何安排呢？如果重写了某个虚函数，那么就在相应的基类的虚函数表中修改，如果定义了新的虚函数，则放在第一个虚函数表中。例如，在上图中若派生类重写了<code>Base2::func2()</code>并新增了一个虚函数<code>Deriv::func3()</code>，则上图变为，<br><a href="/images/2020-12-18/inheritance9.png" data-caption="Inherit multiple classes with virtual functions" data-fancybox="images"><img src="/images/2020-12-18/inheritance9.png" alt="Inherit multiple classes with virtual functions"></a><br>如果，多个基类中含有重名的虚函数，并且在派生类中被重写，则所有积累中的方法都被派生类中重写的方法覆盖。</p>
+<p>还需要指出的是，如果派生类继承了若干个基类，并且它们有的含有虚函数有的不含虚函数，最终派生类中会把含有虚函数的基类排列到不含虚函数的类之前。</p>
+<h2 id="小结">小结<a class="post-anchor" href="#小结"></a></h2><p>上面的讨论中没有考虑虚继承、菱形继承等稍复杂一些的情况。讨论这些情况，需要对虚函数表多做一些描述。留待后续补充。</p>
+</body></html>
+
+  
+  <div class="post-guide">
+    <div class="item left">
+        
+          <a href="/2020/12/30/2020-12-30-Attack-Lab/">CSAPP attack lab</a>
+        
+    </div>
+    <div class="item right">
+        
+          <a href="/2020/04/20/2020-04-20-using-fhi98pp/">Using FHI98PP program to generate pseudopotentials</a>
+        
+    </div>
+  </div>
+
+  
+
+  <div class="post-copyright">
+    <div class="auth">
+      本文作者：<a href="http://yanghan234.github.io">Han Yang</a>
+    </div>
+    <div class="link">
+      永久链接：<a href="http://yanghan234.github.io/2020/12/18/2020-12-18-Cpp-Object-Model/">http://yanghan234.github.io/2020/12/18/2020-12-18-Cpp-Object-Model/</a>
+    </div>
+    <div class="declare">
+      版权声明：本文首发于<a href="http://yanghan234.github.io">Han Yang</a>的博客，转载请注明出处！
+    </div>
+  </div>
+
+  <div id="comment"></div>
+
+  
+
+  <div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://yanghan234.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+</article>
+        <footer>
+          <div class="copyright">
+            ©2021
+            <a href="http://yanghan234.github.io">Han Yang</a> Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> |
+            <a target="_blank" rel="noopener" href="https://github.com/shixiaohu2206/hexo-theme-huhu">hexo-theme-huhu</a>
+          </div>
+          
+        </footer>
+      </div>
+    </div>
+  </body>
+  
+</html>
+<script type="text/javascript">
+                  window.HUHU_CONFIG = JSON.parse("{\"share\":[\"weibo\",\"weixin\",\"qqkongjian\",\"QQ\",\"douban\",\"facebook\",\"twitter\",\"google\"],\"service_worker\":{\"open\":false}}")
+                </script> <script type="text/javascript">window.addEventListener('load', function() {
+    
+    window.loadJs = function(d, m, a) {
+      var c = document.getElementsByTagName('head')[0] || document.head || document.documentElement
+      var b = document.createElement('script')
+      b.defer = true
+      b.setAttribute('type', 'text/javascript')
+      b.setAttribute('charset', 'UTF-8')
+      b.setAttribute('async', 'true')
+      b.setAttribute('src', d)
+      m && b.setAttribute('data-main', '/scripts/app-built')
+      if (typeof a === 'function') {
+        if (window.attachEvent) {
+          b.onreadystatechange = function() {
+            var e = b.readyState
+            if (e === 'loaded' || e === 'complete') {
+              b.onreadystatechange = null
+              a()
+            }
+          }
+        } else {
+          b.onload = a
+        }
+      }
+      c.appendChild(b)
+    }
+    window.loadJs && window.loadJs('https://cdn.bootcss.com/require.js/2.3.6/require.min.js', true, function() {require.config({"paths":{"util":"util","share":"share","search":"search","pagemap":"pagemap.min","registerSW":"registerSW","valine":"cdn/Valine.min","av":["https://cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min"],"pjax":["https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min"],"jquery":["https://cdn.bootcss.com/jquery/3.4.1/jquery.min"],"confirm":["https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min"],"fancybox":["https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min"],"chart":["https://cdn.bootcss.com/Chart.js/2.8.0-rc.1/Chart.bundle.min"]},"map":{"*":{"css":"https://cdn.bootcss.com/require-css/0.1.10/css.min.js"}},"shim":{"fancybox":{"deps":["css!https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css"]},"confirm":{"deps":["css!https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min.css"]},"chart":{"deps":["css!https://cdn.bootcss.com/Chart.js/2.8.0-rc.1/Chart.min.css"]}},"waitSeconds":3})})
+  })</script> <script type="text/javascript">
+                  ;(function() {
+                    var bp = document.createElement('script')
+                    var curProtocol = window.location.protocol.split(':')[0]
+                    if (curProtocol === 'https') {
+                      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'
+                    } else {
+                      bp.src = 'http://push.zhanzhang.baidu.com/push.js'
+                    }
+                    var s = document.getElementsByTagName('script')[0]
+                    s.parentNode.insertBefore(bp, s)
+                  })()
+                </script> 

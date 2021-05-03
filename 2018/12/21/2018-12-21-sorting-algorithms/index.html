@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <script>
+  var _hmt = _hmt || []
+  ;(function() {
+    var hm = document.createElement('script')
+    hm.src = 'https://hm.baidu.com/hm.js?5a0acc897fd96474a2c8f4deac84611a'
+    var s = document.getElementsByTagName('script')[0]
+    s.parentNode.insertBefore(hm, s)
+  })()
+</script> 
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    
+    <title>
+      常见排序算法 - Han&#39;s Blog
+    </title>
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    
+<link rel="stylesheet" href="/style/style.css">
+
+  <meta name="generator" content="Hexo 5.4.0"></head>
+  <body>
+    <canvas id='pagemap'></canvas>
+    
+    <div id="post-toc" class="animated hiddenToc hide">
+      <span class="title">Toc</span>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E4%B8%BA-O-N-2-%E7%9A%84%E5%87%A0%E7%A7%8D%E7%AE%97%E6%B3%95"><span class="toc-text">复杂度为$O(N^2)$的几种算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F-Bubble-sort"><span class="toc-text">冒泡排序(Bubble sort)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F-Selection-sort"><span class="toc-text">选择排序(Selection sort)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F-Insertion-sort"><span class="toc-text">插入排序(Insertion sort)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E4%B8%BA-O-Nlog-N-%E7%9A%84%E5%87%A0%E7%A7%8D%E7%AE%97%E6%B3%95"><span class="toc-text">复杂度为$O(Nlog N)$的几种算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%88%E5%B9%B6%E6%8E%92%E5%BA%8F"><span class="toc-text">合并排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F"><span class="toc-text">快速排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E4%BB%8B%E4%BA%8E-O-N-2-%E5%92%8C-O-NlogN-%E4%B9%8B%E9%97%B4%E7%9A%84%E6%8E%92%E5%BA%8F"><span class="toc-text">复杂度介于$O(N^2)$和$O(NlogN)$之间的排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F-Shell-sort"><span class="toc-text">希尔排序(Shell sort)</span></a></li></ol>
+    </div>
+    
+    <div id="fixed-menu-wrap">
+      <span class="iconfont icon-sousuo search-box menu-reset"></span>
+      <span class="icon-toc menu-reset">Toc</span>
+      <span class="iconfont icon-arrowup menu-reset"></span>
+    </div>
+    <div id="fixed-menu">
+      <span class="iconfont icon-menu-"></span>
+    </div>
+    <div id="progress">
+      <div class="line"></div>
+    </div>
+    <div id="search-shade" class="animated hiddenSearch hide">
+      <div class="input-wrap">
+        <span class="iconfont icon-sousuo search-box"></span>
+        <input type="text" placeholder="Search" />
+        <span class="iconfont icon-close"></span>
+      </div>
+      <div class="search-result">
+        <div class="meta">
+          <span><b id="result-count">0</b> results found</span>
+          <img src="/images/logo.jpeg" />
+        </div>
+        <ul id="result-box"></ul>
+      </div>
+    </div>
+    <div id="menu-mask" class="animated hideMenuMask hide">
+      <span class="iconfont icon-close"></span>
+      <div class="nav">
+        
+        <a href="/" class="">
+          Home
+        </a>
+        
+        <a href="/archives" class="">
+          Archives
+        </a>
+        
+        <a href="/categories" class="">
+          Categories
+        </a>
+        
+        <a href="/tags" class="">
+          Tags
+        </a>
+        
+        <a href="/science" class="">
+          Science
+        </a>
+        
+        <a href="/about" class="">
+          About
+        </a>
+        
+      </div>
+    </div>
+    <div id="header">
+      <div class="intro">
+        <a href="/" class="logo" style="background-image: url('/images/logo.jpeg')"></a>
+        <div class="author"></div>
+      </div>
+      <div class="nav">
+        <span class="iconfont icon-menu menu-icon"></span>
+        <a href="#" class="search-box">
+          <span class="iconfont icon-sousuo"></span>
+        </a>
+      </div>
+    </div>
+    <div id="side" class="animated bounceInLeft">
+      <div class="shrink">
+        <a href="/" class="logo" style="background-image: url('/images/logo.jpeg')"></a>
+        <span class="iconfont icon-menu toggle-icon"></span>
+        <a href="#" class="search-box">
+          <span class="iconfont icon-sousuo"></span>
+        </a>
+      </div>
+      <div class="magnify">
+        <div class="about">
+          <div class="author"></div>
+          <a href="/" class="logo" style="background-image: url('/images/logo.jpeg')"></a>
+        </div>
+
+        <div class="nav">
+          
+          <a href="/" class="">
+            Home
+          </a>
+          
+          <a href="/archives" class="">
+            Archives
+          </a>
+          
+          <a href="/categories" class="">
+            Categories
+          </a>
+          
+          <a href="/tags" class="">
+            Tags
+          </a>
+          
+          <a href="/science" class="">
+            Science
+          </a>
+          
+          <a href="/about" class="">
+            About
+          </a>
+          
+          <a href="#" class="search-box">
+            <span class="iconfont icon-sousuo"></span>
+          </a>
+        </div>
+        <div class="bottom">
+          <div class="follow">
+            
+            <a href="https://github.com/yanghan234" target="_block">
+              <span class="iconfont icon-github"></span>
+            </a>
+             
+            <a href="/atom.xml" target="_block">
+              <span class="iconfont icon-rss"></span>
+            </a>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="container">
+      <div class="main animated bounceInRight delay-0.7s">
+        <article class="post-entry">
+    <div class="header">
+      
+      <div class="title">常见排序算法</div>
+      <div class="meta">
+        <span class="item">
+          <span class="iconfont icon-time-circle"></span>
+          <span>2018/12/21</span>
+        </span>
+
+        
+
+         
+        <span class="item">
+          <span class="iconfont icon-folder"></span>
+          <span>
+              
+                
+                  <a href="/categories/ComputerScience">ComputerScience</a>
+                
+              
+          </span>
+        </span>
+        
+        
+         
+          <span class="item">
+            <span class="iconfont icon-tag1"></span>
+            <span>
+                
+                  
+                    <a href="/tags/Algorithm">Algorithm</a>
+                  
+                
+            </span>
+          </span>
+         
+      </div>
+      <div>
+      </div>
+    </div>
+    <html><head></head><body><h3 id="复杂度为-O-N-2-的几种算法">复杂度为$O(N^2)$的几种算法<a class="post-anchor" href="#复杂度为-O-N-2-的几种算法"></a></h3><p>符合此种复杂度的排序算法最为直观。<br>以下介绍冒泡排序(Bubble sort)，选择排序(Selection sort), 插入排序(Insertion sort)</p>
+<h3 id="冒泡排序-Bubble-sort">冒泡排序(Bubble sort)<a class="post-anchor" href="#冒泡排序-Bubble-sort"></a></h3><p>两个指针同时扫，每当右指针数值小于左指针，则交换之。</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// vector&lt;int&gt; arr has been declared and initialized;</span><br><span class="hljs-keyword">for</span> ( <span class="hljs-keyword">unsigned</span> i = <span class="hljs-number">0</span>; i &lt; arr.<span class="hljs-built_in">size</span>()<span class="hljs-number">-1</span>; i++ )<br>{<br>    <span class="hljs-keyword">for</span> ( <span class="hljs-keyword">unsigned</span> j = i+<span class="hljs-number">1</span>; j &lt; arr.<span class="hljs-built_in">size</span>(); j++ )<br>    {<br>        <span class="hljs-keyword">if</span> ( arr[j] &lt; arr[i] )<br>            <span class="hljs-comment">// swap has been defined else where</span><br>            <span class="hljs-built_in">swap</span>( arr[i], arr[j] );<br>    }<br>}<br></code></pre></td></tr></tbody></table></figure>
+
+<h3 id="选择排序-Selection-sort">选择排序(Selection sort)<a class="post-anchor" href="#选择排序-Selection-sort"></a></h3><p>两个指针i, j同时扫遍数组，右侧指针始终查找i之后所有元素中的最小值。若该最小值小于i位上的值，则交换之。</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// vector&lt;int&gt; arr</span><br><span class="hljs-keyword">for</span> ( <span class="hljs-keyword">unsigned</span> i = <span class="hljs-number">0</span>; i &lt; arr.<span class="hljs-built_in">size</span>()<span class="hljs-number">-1</span>; i++ )<br>{<br>    <span class="hljs-keyword">unsigned</span> minIndex = i+<span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span> ( <span class="hljs-keyword">unsigned</span> j = <span class="hljs-number">0</span>; j &lt; arr.<span class="hljs-built_in">size</span>(); j++ )<br>    {<br>        <span class="hljs-keyword">if</span> ( arr[j] &lt; arr[minIndex] )<br>            minIndex = j;<br>    }<br>    <span class="hljs-built_in">swap</span>(arr[i], arr[minIndex]);<br>}<br></code></pre></td></tr></tbody></table></figure>
+
+<h3 id="插入排序-Insertion-sort">插入排序(Insertion sort)<a class="post-anchor" href="#插入排序-Insertion-sort"></a></h3><p>两个指针从右向做扫遍数组。对于每一个右指针，左指针向前寻找到存放右指针数值的正确位置，并插入之。</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// vector&lt;int&gt; arr;</span><br><span class="hljs-keyword">for</span> ( <span class="hljs-keyword">int</span> j = arr.<span class="hljs-built_in">size</span>()<span class="hljs-number">-1</span>; j &gt;= <span class="hljs-number">1</span>; j-- )<br>{<br>    <span class="hljs-keyword">int</span> val = arr[j];<br>    <span class="hljs-keyword">for</span> ( <span class="hljs-keyword">int</span> i = j<span class="hljs-number">-1</span>; i &gt;= <span class="hljs-number">0</span>; i-- )<br>    {<br>        <span class="hljs-comment">// i could be -1, so use int not unsigned</span><br>        <span class="hljs-keyword">if</span> ( a[i] &gt; val )<br>            a[i+<span class="hljs-number">1</span>] = a[i];<br>    }<br>    a[i+<span class="hljs-number">1</span>] = val;<br>}<br></code></pre></td></tr></tbody></table></figure>
+
+<p>对于已经大致排序好的数组，插入排序的复杂度可能达到接近O(N)的水平。但是，如果是已经完全逆向排序好的数组，插入排序的表现甚至比选择排序要差。</p>
+<h3 id="复杂度为-O-Nlog-N-的几种算法">复杂度为$O(Nlog N)$的几种算法<a class="post-anchor" href="#复杂度为-O-Nlog-N-的几种算法"></a></h3><p>常见的N log(N)算法有合并排序(Merge sort)，快速排序(Quick sort)和堆排序(Heapsort)。此处介绍合并排序和快速排序，堆排序将在优先队列中提及。合并排序和快速排序都有分治法的思想(Divid-and-conquer)。合并排序的优点在于稳定性，缺点在于非原位，因而需要额外内存。 快排不需要额外内存，原位地(in-place)排序。但快排丢失了稳定性。就效率来说，虽然二者都是NlogN的复杂度，但是平均来说快排还是要比合并排序和堆排序要快一些。</p>
+<h3 id="合并排序">合并排序<a class="post-anchor" href="#合并排序"></a></h3><p>合并排序将数组不断划分为左右两个部分，然后对左右两部分再进行划分直至当前处理的数组只包含一到两个数值，此时可以直接返回，或者交换数值再返回。一旦左右两部分排序完成并返回后，此时对左右两侧进行合并。这正是合并排序名称的由来。<br>假定数组中存在N个元素，则进行上述划分的操作至多不超过log2(N)次。</p>
+<p>代码详见：<br><a target="_blank" rel="noopener" href="https://github.com/yanghan234/algorithm-on-coursera/blob/master/Week3/Merge_Sort.cpp">Merge sort in C++</a></p>
+<h3 id="快速排序">快速排序<a class="post-anchor" href="#快速排序"></a></h3><p>快速排序首先从数组中选择一个数值作为参照物，然后对当前数组进行调整，使得参照物回到正确位置上，即该数左侧所有数值都应小于参照物，右侧所有数值都应大于参照物。但此时左右两个部分内部的顺序依然没有排定，因此对左右两个部分分别再进行上述操作。</p>
+<p>代码详见：<br><a target="_blank" rel="noopener" href="https://github.com/yanghan234/algorithm-on-coursera/blob/master/Week3/Quick_Sort.cpp">Quick sort in C++</a></p>
+<h3 id="复杂度介于-O-N-2-和-O-NlogN-之间的排序">复杂度介于$O(N^2)$和$O(NlogN)$之间的排序<a class="post-anchor" href="#复杂度介于-O-N-2-和-O-NlogN-之间的排序"></a></h3><h3 id="希尔排序-Shell-sort">希尔排序(Shell sort)<a class="post-anchor" href="#希尔排序-Shell-sort"></a></h3><p>此种排序采用了与插入排序类似的思想。上面提到，插入排序对于已经大致排好序的数组效率较高。同时插入排序可以视作是一种间距为1的排序，即每个数与其相聚为1的数进行比较。Shell排序采用如下策略，首先对用一个大间隔进行排序，然后逐步缩小间隔至1，此时就蜕化成了普通的插入排序。由于此时数组已经大致排好序，因此插入排序的表现也会比较好。</p>
+<p>然后，采用何种间隔进行希尔排序以达到最好效果还难以明确。常用的是下面的序列，<br>1, 4, 13, 40, 121, …<br>f(n) = 3f(n-1) + 1</p>
+<p>代码详见<br><a target="_blank" rel="noopener" href="https://github.com/yanghan234/algorithm-on-coursera/blob/master/Week3/Shell_Sort.cpp">Shell sort in C++</a></p>
+</body></html>
+
+  
+  <div class="post-guide">
+    <div class="item left">
+        
+          <a href="/2019/01/01/2019-01-01-MyYear2018/">My Year 2018</a>
+        
+    </div>
+    <div class="item right">
+        
+          <a href="/2018/12/15/2018-12-15-ByeBye-Dr-Lin/">长我十岁的林博士，好运</a>
+        
+    </div>
+  </div>
+
+  
+
+  <div class="post-copyright">
+    <div class="auth">
+      本文作者：<a href="http://yanghan234.github.io">Han Yang</a>
+    </div>
+    <div class="link">
+      永久链接：<a href="http://yanghan234.github.io/2018/12/21/2018-12-21-sorting-algorithms/">http://yanghan234.github.io/2018/12/21/2018-12-21-sorting-algorithms/</a>
+    </div>
+    <div class="declare">
+      版权声明：本文首发于<a href="http://yanghan234.github.io">Han Yang</a>的博客，转载请注明出处！
+    </div>
+  </div>
+
+  <div id="comment"></div>
+
+  
+
+  <div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://yanghan234.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+</article>
+        <footer>
+          <div class="copyright">
+            ©2021
+            <a href="http://yanghan234.github.io">Han Yang</a> Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> |
+            <a target="_blank" rel="noopener" href="https://github.com/shixiaohu2206/hexo-theme-huhu">hexo-theme-huhu</a>
+          </div>
+          
+        </footer>
+      </div>
+    </div>
+  </body>
+  
+</html>
+<script type="text/javascript">
+                  window.HUHU_CONFIG = JSON.parse("{\"share\":[\"weibo\",\"weixin\",\"qqkongjian\",\"QQ\",\"douban\",\"facebook\",\"twitter\",\"google\"],\"service_worker\":{\"open\":false}}")
+                </script> <script type="text/javascript">window.addEventListener('load', function() {
+    
+    window.loadJs = function(d, m, a) {
+      var c = document.getElementsByTagName('head')[0] || document.head || document.documentElement
+      var b = document.createElement('script')
+      b.defer = true
+      b.setAttribute('type', 'text/javascript')
+      b.setAttribute('charset', 'UTF-8')
+      b.setAttribute('async', 'true')
+      b.setAttribute('src', d)
+      m && b.setAttribute('data-main', '/scripts/app-built')
+      if (typeof a === 'function') {
+        if (window.attachEvent) {
+          b.onreadystatechange = function() {
+            var e = b.readyState
+            if (e === 'loaded' || e === 'complete') {
+              b.onreadystatechange = null
+              a()
+            }
+          }
+        } else {
+          b.onload = a
+        }
+      }
+      c.appendChild(b)
+    }
+    window.loadJs && window.loadJs('https://cdn.bootcss.com/require.js/2.3.6/require.min.js', true, function() {require.config({"paths":{"util":"util","share":"share","search":"search","pagemap":"pagemap.min","registerSW":"registerSW","valine":"cdn/Valine.min","av":["https://cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min"],"pjax":["https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min"],"jquery":["https://cdn.bootcss.com/jquery/3.4.1/jquery.min"],"confirm":["https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min"],"fancybox":["https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min"],"chart":["https://cdn.bootcss.com/Chart.js/2.8.0-rc.1/Chart.bundle.min"]},"map":{"*":{"css":"https://cdn.bootcss.com/require-css/0.1.10/css.min.js"}},"shim":{"fancybox":{"deps":["css!https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css"]},"confirm":{"deps":["css!https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min.css"]},"chart":{"deps":["css!https://cdn.bootcss.com/Chart.js/2.8.0-rc.1/Chart.min.css"]}},"waitSeconds":3})})
+  })</script> <script type="text/javascript">
+                  ;(function() {
+                    var bp = document.createElement('script')
+                    var curProtocol = window.location.protocol.split(':')[0]
+                    if (curProtocol === 'https') {
+                      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'
+                    } else {
+                      bp.src = 'http://push.zhanzhang.baidu.com/push.js'
+                    }
+                    var s = document.getElementsByTagName('script')[0]
+                    s.parentNode.insertBefore(bp, s)
+                  })()
+                </script> 

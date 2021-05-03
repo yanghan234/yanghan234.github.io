@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <script>
+  var _hmt = _hmt || []
+  ;(function() {
+    var hm = document.createElement('script')
+    hm.src = 'https://hm.baidu.com/hm.js?5a0acc897fd96474a2c8f4deac84611a'
+    var s = document.getElementsByTagName('script')[0]
+    s.parentNode.insertBefore(hm, s)
+  })()
+</script> 
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    
+    <title>
+      Basic Data Structures, Stack and Queue - Han&#39;s Blog
+    </title>
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    
+<link rel="stylesheet" href="/style/style.css">
+
+  <meta name="generator" content="Hexo 5.4.0"></head>
+  <body>
+    <canvas id='pagemap'></canvas>
+    
+    <div id="post-toc" class="animated hiddenToc hide">
+      <span class="title">Toc</span>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Stack-API"><span class="toc-text">Stack API</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Linked-list-Stack"><span class="toc-text">Linked list Stack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Resizing-Array-Stack"><span class="toc-text">Resizing Array Stack</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Queue-API"><span class="toc-text">Queue API</span></a></li></ol>
+    </div>
+    
+    <div id="fixed-menu-wrap">
+      <span class="iconfont icon-sousuo search-box menu-reset"></span>
+      <span class="icon-toc menu-reset">Toc</span>
+      <span class="iconfont icon-arrowup menu-reset"></span>
+    </div>
+    <div id="fixed-menu">
+      <span class="iconfont icon-menu-"></span>
+    </div>
+    <div id="progress">
+      <div class="line"></div>
+    </div>
+    <div id="search-shade" class="animated hiddenSearch hide">
+      <div class="input-wrap">
+        <span class="iconfont icon-sousuo search-box"></span>
+        <input type="text" placeholder="Search" />
+        <span class="iconfont icon-close"></span>
+      </div>
+      <div class="search-result">
+        <div class="meta">
+          <span><b id="result-count">0</b> results found</span>
+          <img src="/images/logo.jpeg" />
+        </div>
+        <ul id="result-box"></ul>
+      </div>
+    </div>
+    <div id="menu-mask" class="animated hideMenuMask hide">
+      <span class="iconfont icon-close"></span>
+      <div class="nav">
+        
+        <a href="/" class="">
+          Home
+        </a>
+        
+        <a href="/archives" class="">
+          Archives
+        </a>
+        
+        <a href="/categories" class="">
+          Categories
+        </a>
+        
+        <a href="/tags" class="">
+          Tags
+        </a>
+        
+        <a href="/science" class="">
+          Science
+        </a>
+        
+        <a href="/about" class="">
+          About
+        </a>
+        
+      </div>
+    </div>
+    <div id="header">
+      <div class="intro">
+        <a href="/" class="logo" style="background-image: url('/images/logo.jpeg')"></a>
+        <div class="author"></div>
+      </div>
+      <div class="nav">
+        <span class="iconfont icon-menu menu-icon"></span>
+        <a href="#" class="search-box">
+          <span class="iconfont icon-sousuo"></span>
+        </a>
+      </div>
+    </div>
+    <div id="side" class="animated bounceInLeft">
+      <div class="shrink">
+        <a href="/" class="logo" style="background-image: url('/images/logo.jpeg')"></a>
+        <span class="iconfont icon-menu toggle-icon"></span>
+        <a href="#" class="search-box">
+          <span class="iconfont icon-sousuo"></span>
+        </a>
+      </div>
+      <div class="magnify">
+        <div class="about">
+          <div class="author"></div>
+          <a href="/" class="logo" style="background-image: url('/images/logo.jpeg')"></a>
+        </div>
+
+        <div class="nav">
+          
+          <a href="/" class="">
+            Home
+          </a>
+          
+          <a href="/archives" class="">
+            Archives
+          </a>
+          
+          <a href="/categories" class="">
+            Categories
+          </a>
+          
+          <a href="/tags" class="">
+            Tags
+          </a>
+          
+          <a href="/science" class="">
+            Science
+          </a>
+          
+          <a href="/about" class="">
+            About
+          </a>
+          
+          <a href="#" class="search-box">
+            <span class="iconfont icon-sousuo"></span>
+          </a>
+        </div>
+        <div class="bottom">
+          <div class="follow">
+            
+            <a href="https://github.com/yanghan234" target="_block">
+              <span class="iconfont icon-github"></span>
+            </a>
+             
+            <a href="/atom.xml" target="_block">
+              <span class="iconfont icon-rss"></span>
+            </a>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="container">
+      <div class="main animated bounceInRight delay-0.7s">
+        <article class="post-entry">
+    <div class="header">
+      
+      <div class="title">Basic Data Structures, Stack and Queue</div>
+      <div class="meta">
+        <span class="item">
+          <span class="iconfont icon-time-circle"></span>
+          <span>2019/01/05</span>
+        </span>
+
+        
+
+         
+        <span class="item">
+          <span class="iconfont icon-folder"></span>
+          <span>
+              
+                
+                  <a href="/categories/ComputerScience">ComputerScience</a>
+                
+              
+          </span>
+        </span>
+        
+        
+         
+          <span class="item">
+            <span class="iconfont icon-tag1"></span>
+            <span>
+                
+                  
+                    <a href="/tags/Algorithm">Algorithm</a>
+                  
+                
+            </span>
+          </span>
+         
+      </div>
+      <div>
+      </div>
+    </div>
+    <html><head></head><body><p><strong>Stacks</strong> and <strong>Queues</strong> are basic data structures that have been widely used. The former has last-in-first-out (LIFO) accessing order while the latter has first-in-first-out (FIFO) order.</p>
+<p>We will discuss the APIs that these data structures should at least have and how to implement them.</p>
+<h2 id="Stack-API">Stack API<a class="post-anchor" href="#Stack-API"></a></h2><p>Detailed descriptions are:</p>
+<ul>
+<li>Stack( ): default constructor;</li>
+<li>push( Item ): push/add one element to the top<ul>
+<li>return type: void</li>
+</ul>
+</li>
+<li>top( ): access the top element<ul>
+<li>return type: Item</li>
+</ul>
+</li>
+<li>pop( ): Remove the element on the top.<ul>
+<li>return type: Item</li>
+</ul>
+</li>
+<li>isEmpty( ): If the stack is empty.<ul>
+<li>return type: boolean</li>
+</ul>
+</li>
+<li>size( ): Number of elemenets in the stack.<ul>
+<li>return type: int</li>
+</ul>
+</li>
+</ul>
+<p>To implement the stack, we must have an underlying container to hold the elemenets in the stack. Usually, people pick up the container from linked list and resizing array. Either has pros and cons.</p>
+<h3 id="Linked-list-Stack">Linked list Stack<a class="post-anchor" href="#Linked-list-Stack"></a></h3><p>A typical linked list looks like the following in Java</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Node</span>&lt;<span class="hljs-title">Item</span>&gt;</span><br><span class="hljs-class"></span>{<br>    <span class="hljs-keyword">public</span> Item val;<br>    <span class="hljs-keyword">public</span> Node&lt;Item&gt; next;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Node</span><span class="hljs-params">(Item elem)</span></span><br><span class="hljs-function">    </span>{<br>        val = elem;<br>        next = <span class="hljs-keyword">null</span>;<br>    }<br>}<br></code></pre></td></tr></tbody></table></figure>
+
+<p>In a stack, we will have a root node. Each time adding or removing one element from the stack, we add or remove from the begining by modifying the root node.</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Stack</span>&lt;<span class="hljs-title">Item</span>&gt;</span><br><span class="hljs-class"></span>{<br><span class="hljs-comment">// ...</span><br>    <span class="hljs-keyword">private</span> Node&lt;Item&gt; root;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">push</span><span class="hljs-params">(Item elem)</span></span><br><span class="hljs-function">    </span>{<br>        Node&lt;Item&gt; newroot = <span class="hljs-keyword">new</span> Node&lt;Item&gt;(elem);<br>        newroot.next = root;<br>        root = newroot;<br>    }<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Item <span class="hljs-title">pop</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>{<br>        <span class="hljs-comment">// make sure the stack is not empty</span><br>        Item elem = root.val;<br>        root = root.next;<br>        <span class="hljs-keyword">return</span> elem;<br>    }<br><span class="hljs-comment">// ...</span><br>}<br></code></pre></td></tr></tbody></table></figure>
+<p>By doing so, the push() and pop() methods are done at constant cost. However, linked list implementation always requires extra memory to contain the data. For data set with every large size, available memory might not be enough.</p>
+<h3 id="Resizing-Array-Stack">Resizing Array Stack<a class="post-anchor" href="#Resizing-Array-Stack"></a></h3><p>To solve the problem mentioned above, an alternative way is to implement stacks with resizing arrays. When declare arrays, we have to specify the length of the array. So, we implement the following technique.</p>
+<ol>
+<li>When the current array is full, we double the size of the array.</li>
+<li>When the number of elements in the array is smaller than 1/4 of the capacity of the array, we reduce the capacity to its half.</li>
+</ol>
+<p>With the technique described above, the amortized cost to contain N elements will be logN.<br>When pushing elements to the stack, we push to the end; when poping from the stack, we pop from the end.</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Stack</span>&lt;<span class="hljs-title">Item</span>&gt;</span><br><span class="hljs-class"></span>{<br>    <span class="hljs-keyword">private</span> Item[] elems;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> capacity; <span class="hljs-comment">// capacity of the stack for now</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> count;    <span class="hljs-comment">// number of elements in the stack for now</span><br>    <span class="hljs-comment">// ...</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">push</span><span class="hljs-params">(Item elem)</span></span><br><span class="hljs-function">    </span>{<br>        elems[count++] = elem;<br>        <span class="hljs-comment">// if full, double capacity</span><br>        <span class="hljs-keyword">if</span> ( count == capacity )<br>            <span class="hljs-keyword">this</span>.resize(<span class="hljs-number">2</span>*capacity);<br>    }<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Item <span class="hljs-title">pop</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>{<br>        Item elem = elems[--count];<br>        <span class="hljs-keyword">if</span> ( count &lt;= capacity/<span class="hljs-number">4</span> )<br>            <span class="hljs-keyword">this</span>.resize(capacity/<span class="hljs-number">2</span>);<br>        <span class="hljs-keyword">return</span> elem;<br>    }<br><br>    <span class="hljs-comment">// resize the array</span><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">resize</span><span class="hljs-params">(<span class="hljs-keyword">int</span> newcapacity)</span></span><br><span class="hljs-function">    </span>{<br>        <span class="hljs-comment">// allocate generic array</span><br>        Item[] newelems = (Item[]) <span class="hljs-keyword">new</span> Object[newcapacity];<br>        <span class="hljs-keyword">for</span> ( <span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; count; i++ )<br>            newelems[i] = elems[i];<br>        elems = newelems;<br>        capacity = newcapacity;<br>    }<br>    <span class="hljs-comment">// ...</span><br>}<br></code></pre></td></tr></tbody></table></figure>
+
+<h2 id="Queue-API">Queue API<a class="post-anchor" href="#Queue-API"></a></h2><p>A queue is very similar to a stack except that queues have different accessing order. We can also implement queues with linked lists and resizing arrays. If linked lists are used, we push to the front, while pop from the end. In this case, adding elements still has constant cost while dequeue() method has O(N) complexity. If arrays are used, we push to the end, while pop from the front. The complexity of array queue is the same as array stacks.</p>
+<p>The codes are not shown here, but can be found in <a target="_blank" rel="noopener" href="https://github.com/yanghan234/algorithm-on-coursera/blob/master/Week1_2/Queue_LinkedList.java">linked-list queue</a> and <a target="_blank" rel="noopener" href="https://github.com/yanghan234/algorithm-on-coursera/blob/master/Week1_2/Queue_Array.java">resizing-array queue</a>.</p>
+</body></html>
+
+  
+  <div class="post-guide">
+    <div class="item left">
+        
+          <a href="/2019/11/27/2019-11-27-A-Short-Summary-of-Vector-and-Matrix-Derivative/">A short summary of vector and matrix derivatives</a>
+        
+    </div>
+    <div class="item right">
+        
+          <a href="/2019/01/01/2019-01-01-MyYear2018/">My Year 2018</a>
+        
+    </div>
+  </div>
+
+  
+
+  <div class="post-copyright">
+    <div class="auth">
+      本文作者：<a href="http://yanghan234.github.io">Han Yang</a>
+    </div>
+    <div class="link">
+      永久链接：<a href="http://yanghan234.github.io/2019/01/05/2019-01-05-Queue-and-Stack/">http://yanghan234.github.io/2019/01/05/2019-01-05-Queue-and-Stack/</a>
+    </div>
+    <div class="declare">
+      版权声明：本文首发于<a href="http://yanghan234.github.io">Han Yang</a>的博客，转载请注明出处！
+    </div>
+  </div>
+
+  <div id="comment"></div>
+
+  
+
+  <div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://yanghan234.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+</article>
+        <footer>
+          <div class="copyright">
+            ©2021
+            <a href="http://yanghan234.github.io">Han Yang</a> Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> |
+            <a target="_blank" rel="noopener" href="https://github.com/shixiaohu2206/hexo-theme-huhu">hexo-theme-huhu</a>
+          </div>
+          
+        </footer>
+      </div>
+    </div>
+  </body>
+  
+</html>
+<script type="text/javascript">
+                  window.HUHU_CONFIG = JSON.parse("{\"share\":[\"weibo\",\"weixin\",\"qqkongjian\",\"QQ\",\"douban\",\"facebook\",\"twitter\",\"google\"],\"service_worker\":{\"open\":false}}")
+                </script> <script type="text/javascript">window.addEventListener('load', function() {
+    
+    window.loadJs = function(d, m, a) {
+      var c = document.getElementsByTagName('head')[0] || document.head || document.documentElement
+      var b = document.createElement('script')
+      b.defer = true
+      b.setAttribute('type', 'text/javascript')
+      b.setAttribute('charset', 'UTF-8')
+      b.setAttribute('async', 'true')
+      b.setAttribute('src', d)
+      m && b.setAttribute('data-main', '/scripts/app-built')
+      if (typeof a === 'function') {
+        if (window.attachEvent) {
+          b.onreadystatechange = function() {
+            var e = b.readyState
+            if (e === 'loaded' || e === 'complete') {
+              b.onreadystatechange = null
+              a()
+            }
+          }
+        } else {
+          b.onload = a
+        }
+      }
+      c.appendChild(b)
+    }
+    window.loadJs && window.loadJs('https://cdn.bootcss.com/require.js/2.3.6/require.min.js', true, function() {require.config({"paths":{"util":"util","share":"share","search":"search","pagemap":"pagemap.min","registerSW":"registerSW","valine":"cdn/Valine.min","av":["https://cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min"],"pjax":["https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min"],"jquery":["https://cdn.bootcss.com/jquery/3.4.1/jquery.min"],"confirm":["https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min"],"fancybox":["https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min"],"chart":["https://cdn.bootcss.com/Chart.js/2.8.0-rc.1/Chart.bundle.min"]},"map":{"*":{"css":"https://cdn.bootcss.com/require-css/0.1.10/css.min.js"}},"shim":{"fancybox":{"deps":["css!https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css"]},"confirm":{"deps":["css!https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min.css"]},"chart":{"deps":["css!https://cdn.bootcss.com/Chart.js/2.8.0-rc.1/Chart.min.css"]}},"waitSeconds":3})})
+  })</script> <script type="text/javascript">
+                  ;(function() {
+                    var bp = document.createElement('script')
+                    var curProtocol = window.location.protocol.split(':')[0]
+                    if (curProtocol === 'https') {
+                      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'
+                    } else {
+                      bp.src = 'http://push.zhanzhang.baidu.com/push.js'
+                    }
+                    var s = document.getElementsByTagName('script')[0]
+                    s.parentNode.insertBefore(bp, s)
+                  })()
+                </script> 

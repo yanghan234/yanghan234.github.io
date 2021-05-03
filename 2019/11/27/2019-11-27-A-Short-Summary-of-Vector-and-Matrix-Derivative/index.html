@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <script>
+  var _hmt = _hmt || []
+  ;(function() {
+    var hm = document.createElement('script')
+    hm.src = 'https://hm.baidu.com/hm.js?5a0acc897fd96474a2c8f4deac84611a'
+    var s = document.getElementsByTagName('script')[0]
+    s.parentNode.insertBefore(hm, s)
+  })()
+</script> 
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    
+    <title>
+      A short summary of vector and matrix derivatives - Han&#39;s Blog
+    </title>
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    
+<link rel="stylesheet" href="/style/style.css">
+
+  <meta name="generator" content="Hexo 5.4.0"></head>
+  <body>
+    <canvas id='pagemap'></canvas>
+    
+    <div id="post-toc" class="animated hiddenToc hide">
+      <span class="title">Toc</span>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Conventions"><span class="toc-text">Conventions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Definition-of-derivative"><span class="toc-text">Definition of derivative</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Theorem"><span class="toc-text">Theorem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Properties-of-traces"><span class="toc-text">Properties of traces</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Examples"><span class="toc-text">Examples</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Linear-regression"><span class="toc-text">Linear regression</span></a></li></ol></li></ol>
+    </div>
+    
+    <div id="fixed-menu-wrap">
+      <span class="iconfont icon-sousuo search-box menu-reset"></span>
+      <span class="icon-toc menu-reset">Toc</span>
+      <span class="iconfont icon-arrowup menu-reset"></span>
+    </div>
+    <div id="fixed-menu">
+      <span class="iconfont icon-menu-"></span>
+    </div>
+    <div id="progress">
+      <div class="line"></div>
+    </div>
+    <div id="search-shade" class="animated hiddenSearch hide">
+      <div class="input-wrap">
+        <span class="iconfont icon-sousuo search-box"></span>
+        <input type="text" placeholder="Search" />
+        <span class="iconfont icon-close"></span>
+      </div>
+      <div class="search-result">
+        <div class="meta">
+          <span><b id="result-count">0</b> results found</span>
+          <img src="/images/logo.jpeg" />
+        </div>
+        <ul id="result-box"></ul>
+      </div>
+    </div>
+    <div id="menu-mask" class="animated hideMenuMask hide">
+      <span class="iconfont icon-close"></span>
+      <div class="nav">
+        
+        <a href="/" class="">
+          Home
+        </a>
+        
+        <a href="/archives" class="">
+          Archives
+        </a>
+        
+        <a href="/categories" class="">
+          Categories
+        </a>
+        
+        <a href="/tags" class="">
+          Tags
+        </a>
+        
+        <a href="/science" class="">
+          Science
+        </a>
+        
+        <a href="/about" class="">
+          About
+        </a>
+        
+      </div>
+    </div>
+    <div id="header">
+      <div class="intro">
+        <a href="/" class="logo" style="background-image: url('/images/logo.jpeg')"></a>
+        <div class="author"></div>
+      </div>
+      <div class="nav">
+        <span class="iconfont icon-menu menu-icon"></span>
+        <a href="#" class="search-box">
+          <span class="iconfont icon-sousuo"></span>
+        </a>
+      </div>
+    </div>
+    <div id="side" class="animated bounceInLeft">
+      <div class="shrink">
+        <a href="/" class="logo" style="background-image: url('/images/logo.jpeg')"></a>
+        <span class="iconfont icon-menu toggle-icon"></span>
+        <a href="#" class="search-box">
+          <span class="iconfont icon-sousuo"></span>
+        </a>
+      </div>
+      <div class="magnify">
+        <div class="about">
+          <div class="author"></div>
+          <a href="/" class="logo" style="background-image: url('/images/logo.jpeg')"></a>
+        </div>
+
+        <div class="nav">
+          
+          <a href="/" class="">
+            Home
+          </a>
+          
+          <a href="/archives" class="">
+            Archives
+          </a>
+          
+          <a href="/categories" class="">
+            Categories
+          </a>
+          
+          <a href="/tags" class="">
+            Tags
+          </a>
+          
+          <a href="/science" class="">
+            Science
+          </a>
+          
+          <a href="/about" class="">
+            About
+          </a>
+          
+          <a href="#" class="search-box">
+            <span class="iconfont icon-sousuo"></span>
+          </a>
+        </div>
+        <div class="bottom">
+          <div class="follow">
+            
+            <a href="https://github.com/yanghan234" target="_block">
+              <span class="iconfont icon-github"></span>
+            </a>
+             
+            <a href="/atom.xml" target="_block">
+              <span class="iconfont icon-rss"></span>
+            </a>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="container">
+      <div class="main animated bounceInRight delay-0.7s">
+        <article class="post-entry">
+    <div class="header">
+      
+      <div class="title">A short summary of vector and matrix derivatives</div>
+      <div class="meta">
+        <span class="item">
+          <span class="iconfont icon-time-circle"></span>
+          <span>2019/11/27</span>
+        </span>
+
+        
+
+         
+        <span class="item">
+          <span class="iconfont icon-folder"></span>
+          <span>
+              
+                
+                  <a href="/categories/Study">Study</a>
+                
+              
+          </span>
+        </span>
+        
+        
+         
+          <span class="item">
+            <span class="iconfont icon-tag1"></span>
+            <span>
+                
+                  
+                    <a href="/tags/Matrix">Matrix</a>
+                  
+                
+            </span>
+          </span>
+         
+      </div>
+      <div>
+      </div>
+    </div>
+    <html><head></head><body><p>Matrix derivative has been an essential technique in statistical learning. Yet, this topic is usually not covered in a typical linear algebra lecture.  Here, I summarized typical properties and tricks that are often helpful when computing matrix derivatives.</p>
+<h2 id="Conventions">Conventions<a class="post-anchor" href="#Conventions"></a></h2><p>Before discussing the properties and skills used in matrix derivatives, we start with the definition of the derivatives.</p>
+<p>We will use lowercase letters for scalar, e.g. <a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;f" data-caption="f" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;f" alt="f"></a>, lowercase letters with arrow hat for column vectors, e.g. <a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;\vec{x}" data-caption="\vec{x}" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;\vec{x}" alt="\vec{x}"></a>, and uppercase for matrices, e.g. <a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;M" data-caption="M" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;M" alt="M"></a>.</p>
+<h2 id="Definition-of-derivative">Definition of derivative<a class="post-anchor" href="#Definition-of-derivative"></a></h2><p> We start the discussion of matrix derivative by taking a close look at the derivative of a scalar function with respective to a vector. </p>
+<p>Given a scalar function of a vector <a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;f(\vec{x})" data-caption="f(\vec{x})" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;f(\vec{x})" alt="f(\vec{x})"></a>, the derivative with respect to <a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;\vec{x}" data-caption="\vec{x}" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;\vec{x}" alt="\vec{x}"></a> is defined as<br><a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\partial_{\vec{x}} f(\vec{x})=\left[ \begin{array}{c}\vdots\\ \frac{\partial f}{\partial x_i}\\ \vdots\\ \end{array} \right]" data-caption="\partial_{\vec{x}} f(\vec{x})=\left[ \begin{array}{c}\vdots\\ \frac{\partial f}{\partial x_i}\\ \vdots\\ \end{array} \right]" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\partial_{\vec{x}} f(\vec{x})=\left[ \begin{array}{c}\vdots\\ \frac{\partial f}{\partial x_i}\\ \vdots\\ \end{array} \right]" alt="\partial_{\vec{x}} f(\vec{x})=\left[ \begin{array}{c}\vdots\\ \frac{\partial f}{\partial x_i}\\ \vdots\\ \end{array} \right]"></a><br>The differential of <a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;f(\vec{x})" data-caption="f(\vec{x})" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;f(\vec{x})" alt="f(\vec{x})"></a> can be written as,<br><a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\mathrm{d}f(\vec{x}) = \sum_{i}\frac{\partial f}{\partial x_i}\mathrm{d}x_i = \left[\cdots \frac{\partial f}{\partial x_i} \cdots\right] \left[ \begin{array}{c}\vdots\\\mathrm{d}x_i\\\vdots\end{array} \right] = \left(\partial_{\vec{x}}f(\vec{x})\right)^T\mathrm{d}\vec{x}" data-caption="\mathrm{d}f(\vec{x}) = \sum_{i}\frac{\partial f}{\partial x_i}\mathrm{d}x_i = \left[\cdots \frac{\partial f}{\partial x_i} \cdots\right] \left[ \begin{array}{c}\vdots\\\mathrm{d}x_i\\\vdots\end{array} \right] = \left(\partial_{\vec{x}}f(\vec{x})\right)^T\mathrm{d}\vec{x}" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\mathrm{d}f(\vec{x}) = \sum_{i}\frac{\partial f}{\partial x_i}\mathrm{d}x_i = \left[\cdots \frac{\partial f}{\partial x_i} \cdots\right] \left[ \begin{array}{c}\vdots\\\mathrm{d}x_i\\\vdots\end{array} \right] = \left(\partial_{\vec{x}}f(\vec{x})\right)^T\mathrm{d}\vec{x}" alt="\mathrm{d}f(\vec{x}) = \sum_{i}\frac{\partial f}{\partial x_i}\mathrm{d}x_i = \left[\cdots \frac{\partial f}{\partial x_i} \cdots\right] \left[ \begin{array}{c}\vdots\\\mathrm{d}x_i\\\vdots\end{array} \right] = \left(\partial_{\vec{x}}f(\vec{x})\right)^T\mathrm{d}\vec{x}"></a></p>
+<h3 id="Theorem">Theorem<a class="post-anchor" href="#Theorem"></a></h3><p>The differential of a scalar function <a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;f(X)" data-caption="f(X)" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;f(X)" alt="f(X)"></a> of matrix <a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;X" data-caption="X" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;X" alt="X"></a> with respective to matrix <a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;X" data-caption="X" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;X" alt="X"></a> can be written as</p>
+<a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\mathrm{d}f(X) = \sum_i\sum_j\frac{\partial f}{\partial X_{ij}}\mathrm{d}X_{ij} = \mathrm{tr}\left[\left(\frac{\partial f}{\partial X}\right)^T\mathrm{d}X\right]," data-caption="\mathrm{d}f(X) = \sum_i\sum_j\frac{\partial f}{\partial X_{ij}}\mathrm{d}X_{ij} = \mathrm{tr}\left[\left(\frac{\partial f}{\partial X}\right)^T\mathrm{d}X\right]," data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\mathrm{d}f(X) = \sum_i\sum_j\frac{\partial f}{\partial X_{ij}}\mathrm{d}X_{ij} = \mathrm{tr}\left[\left(\frac{\partial f}{\partial X}\right)^T\mathrm{d}X\right]," alt="\mathrm{d}f(X) = \sum_i\sum_j\frac{\partial f}{\partial X_{ij}}\mathrm{d}X_{ij} = \mathrm{tr}\left[\left(\frac{\partial f}{\partial X}\right)^T\mathrm{d}X\right],"></a>
+
+<p>where <a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;\mathrm{tr}" data-caption="\mathrm{tr}" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;\mathrm{tr}" alt="\mathrm{tr}"></a> represents the <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Trace_%28linear_algebra%29">trace</a> of a matrix.</p>
+<p>We are not going to prove this definition, however, we can easily see that this definition applies both to derivative to vectors and matrices. </p>
+<p>As shown above, we defined the differential rather than the derivative of a function. Why? Because we can take advantages of the properties of traces so that  we are able to find derivatives of complex functions without worrying about dimensionalities of vectors or matrices. </p>
+<h3 id="Properties-of-traces">Properties of traces<a class="post-anchor" href="#Properties-of-traces"></a></h3><p>Here are useful properties of the trace of matrices</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;\mathrm{tr}(A+B) = \mathrm{tr}A+\mathrm{tr}B" data-caption="\mathrm{tr}(A+B) = \mathrm{tr}A+\mathrm{tr}B" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;\mathrm{tr}(A+B) = \mathrm{tr}A+\mathrm{tr}B" alt="\mathrm{tr}(A+B) = \mathrm{tr}A+\mathrm{tr}B"></a></li>
+<li><a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;\mathrm{tr}(cA) = c \mathrm{tr}A" data-caption="\mathrm{tr}(cA) = c \mathrm{tr}A" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;\mathrm{tr}(cA) = c \mathrm{tr}A" alt="\mathrm{tr}(cA) = c \mathrm{tr}A"></a></li>
+<li><a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;\mathrm{tr}(AB) = \mathrm{tr}(BA)" data-caption="\mathrm{tr}(AB) = \mathrm{tr}(BA)" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;\mathrm{tr}(AB) = \mathrm{tr}(BA)" alt="\mathrm{tr}(AB) = \mathrm{tr}(BA)"></a></li>
+<li><a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;\mathrm{tr}(AB) = \mathrm{tr}(B^TA^T)" data-caption="\mathrm{tr}(AB) = \mathrm{tr}(B^TA^T)" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;\mathrm{tr}(AB) = \mathrm{tr}(B^TA^T)" alt="\mathrm{tr}(AB) = \mathrm{tr}(B^TA^T)"></a></li>
+<li><a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;\mathrm{tr}(ABC) = \mathrm{tr}(CAB) = \mathrm{tr}(BCA)" data-caption="\mathrm{tr}(ABC) = \mathrm{tr}(CAB) = \mathrm{tr}(BCA)" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;\mathrm{tr}(ABC) = \mathrm{tr}(CAB) = \mathrm{tr}(BCA)" alt="\mathrm{tr}(ABC) = \mathrm{tr}(CAB) = \mathrm{tr}(BCA)"></a></li>
+<li><a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;\mathrm{tr}(A^T(B\odot C)) = \mathrm{tr}((A\odot B)^TC)" data-caption="\mathrm{tr}(A^T(B\odot C)) = \mathrm{tr}((A\odot B)^TC)" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;\mathrm{tr}(A^T(B\odot C)) = \mathrm{tr}((A\odot B)^TC)" alt="\mathrm{tr}(A^T(B\odot C)) = \mathrm{tr}((A\odot B)^TC)"></a>
+
+<p>  where <a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;A" data-caption="A" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;A" alt="A"></a>, <a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;B" data-caption="B" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;B" alt="B"></a>, <a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;C" data-caption="C" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;C" alt="C"></a> are matrices; <a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;c" data-caption="c" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;c" alt="c"></a> is a number; and <a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;\odot" data-caption="\odot" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;\odot" alt="\odot"></a> is element-wise multiplication. </p>
+</li>
+</ul>
+<h2 id="Examples">Examples<a class="post-anchor" href="#Examples"></a></h2><p>Here is an example how to apply the technique above.</p>
+<h3 id="Linear-regression">Linear regression<a class="post-anchor" href="#Linear-regression"></a></h3><p>Given <a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;m" data-caption="m" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;m" alt="m"></a> samples <a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;\{(\vec{x}_1,y_1),\cdots(\vec{x}_m,y_m)\}" data-caption="\{(\vec{x}_1,y_1),\cdots(\vec{x}_m,y_m)\}" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;\{(\vec{x}_1,y_1),\cdots(\vec{x}_m,y_m)\}" alt="\{(\vec{x}_1,y_1),\cdots(\vec{x}_m,y_m)\}"></a> where <a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;\vec{x}\in \mathbb{R}^n" data-caption="\vec{x}\in \mathbb{R}^n" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;\vec{x}\in \mathbb{R}^n" alt="\vec{x}\in \mathbb{R}^n"></a>, we are going to train the linear model,</p>
+<a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?f(\vec{x}) = \omega_0+\omega_1x_1+\cdots+\omega_nx_n+\epsilon = \vec{x}^T\vec{\omega}" data-caption="f(\vec{x}) = \omega_0+\omega_1x_1+\cdots+\omega_nx_n+\epsilon = \vec{x}^T\vec{\omega}" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?f(\vec{x}) = \omega_0+\omega_1x_1+\cdots+\omega_nx_n+\epsilon = \vec{x}^T\vec{\omega}" alt="f(\vec{x}) = \omega_0+\omega_1x_1+\cdots+\omega_nx_n+\epsilon = \vec{x}^T\vec{\omega}"></a>
+
+<p>where <a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;\omega_0,\omega_1,\cdots,\omega_n" data-caption="\omega_0,\omega_1,\cdots,\omega_n" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;\omega_0,\omega_1,\cdots,\omega_n" alt="\omega_0,\omega_1,\cdots,\omega_n"></a> are coefficients.</p>
+<p>We are trying to minimize the error between the prediction and true values (a.k.a. cost function),</p>
+<a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\min_{\omega} \frac{1}{2}\sum_{i}||f(\vec{x}_i)-y_i||^2_2" data-caption="\min_{\omega} \frac{1}{2}\sum_{i}||f(\vec{x}_i)-y_i||^2_2" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\min_{\omega} \frac{1}{2}\sum_{i}||f(\vec{x}_i)-y_i||^2_2" alt="\min_{\omega} \frac{1}{2}\sum_{i}||f(\vec{x}_i)-y_i||^2_2"></a>
+
+<p>where <a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;||\cdot||_2" data-caption="||\cdot||_2" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;||\cdot||_2" alt="||\cdot||_2"></a> is Euclidean-<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Norm_%28mathematics%29#Euclidean_norm">norm</a>.</p>
+<p>Now define matrix <a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;X = \left[\begin{array}{cccc}1&amp;1&amp;\cdots&amp;1\\ \vec{x}_1&amp;\vec{x}_2&amp;\cdots&amp;\vec{x}_m\end{array}\right]" data-caption="X = \left[\begin{array}{cccc}1&amp;1&amp;\cdots&amp;1\\ \vec{x}_1&amp;\vec{x}_2&amp;\cdots&amp;\vec{x}_m\end{array}\right]" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;X = \left[\begin{array}{cccc}1&amp;1&amp;\cdots&amp;1\\ \vec{x}_1&amp;\vec{x}_2&amp;\cdots&amp;\vec{x}_m\end{array}\right]" alt="X = \left[\begin{array}{cccc}1&amp;1&amp;\cdots&amp;1\\ \vec{x}_1&amp;\vec{x}_2&amp;\cdots&amp;\vec{x}_m\end{array}\right]"></a> and vector <a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;\vec{y}=\left[y_1,y_2,\cdots,y_m\right]^T" data-caption="\vec{y}=\left[y_1,y_2,\cdots,y_m\right]^T" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;\vec{y}=\left[y_1,y_2,\cdots,y_m\right]^T" alt="\vec{y}=\left[y_1,y_2,\cdots,y_m\right]^T"></a>, and we can rewrite the cost function as<br><a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?C =\frac{1}{2} (X^T\vec{\omega}-\vec{y})^T(X^T\vec{\omega}-\vec{y})" data-caption="C =\frac{1}{2} (X^T\vec{\omega}-\vec{y})^T(X^T\vec{\omega}-\vec{y})" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?C =\frac{1}{2} (X^T\vec{\omega}-\vec{y})^T(X^T\vec{\omega}-\vec{y})" alt="C =\frac{1}{2} (X^T\vec{\omega}-\vec{y})^T(X^T\vec{\omega}-\vec{y})"></a></p>
+<p>To minimize the cost function, we want find <a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;\vec{\omega}^*" data-caption="\vec{\omega}^*" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;\vec{\omega}^*" alt="\vec{\omega}^*"></a> such that <a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;\partial_{\vec{\omega}^*} C = 0" data-caption="\partial_{\vec{\omega}^*} C = 0" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;\partial_{\vec{\omega}^*} C = 0" alt="\partial_{\vec{\omega}^*} C = 0"></a>. To find the derivative, we firstly compute differential of cost function</p>
+<a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\mathrm{d}C=\mathrm{tr}\left[\frac{1}{2}(X^T\mathrm{d}\vec{\omega})^T(X^T\vec{\omega}-\vec{y})+\frac{1}{2}(X^T\vec{\omega}-\vec{y})^TX^T\mathrm{d}\vec{\omega}\right]" data-caption="\mathrm{d}C=\mathrm{tr}\left[\frac{1}{2}(X^T\mathrm{d}\vec{\omega})^T(X^T\vec{\omega}-\vec{y})+\frac{1}{2}(X^T\vec{\omega}-\vec{y})^TX^T\mathrm{d}\vec{\omega}\right]" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\mathrm{d}C=\mathrm{tr}\left[\frac{1}{2}(X^T\mathrm{d}\vec{\omega})^T(X^T\vec{\omega}-\vec{y})+\frac{1}{2}(X^T\vec{\omega}-\vec{y})^TX^T\mathrm{d}\vec{\omega}\right]" alt="\mathrm{d}C=\mathrm{tr}\left[\frac{1}{2}(X^T\mathrm{d}\vec{\omega})^T(X^T\vec{\omega}-\vec{y})+\frac{1}{2}(X^T\vec{\omega}-\vec{y})^TX^T\mathrm{d}\vec{\omega}\right]"></a>
+
+<a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\mathrm{d}C=\mathrm{tr}[\mathrm{d}\vec{\omega}^TX(X^T\vec{\omega}-\vec{y})]=\mathrm{tr}[X(X^T\vec{\omega}-\vec{y})\mathrm{d}\vec{\omega}^T]" data-caption="\mathrm{d}C=\mathrm{tr}[\mathrm{d}\vec{\omega}^TX(X^T\vec{\omega}-\vec{y})]=\mathrm{tr}[X(X^T\vec{\omega}-\vec{y})\mathrm{d}\vec{\omega}^T]" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\mathrm{d}C=\mathrm{tr}[\mathrm{d}\vec{\omega}^TX(X^T\vec{\omega}-\vec{y})]=\mathrm{tr}[X(X^T\vec{\omega}-\vec{y})\mathrm{d}\vec{\omega}^T]" alt="\mathrm{d}C=\mathrm{tr}[\mathrm{d}\vec{\omega}^TX(X^T\vec{\omega}-\vec{y})]=\mathrm{tr}[X(X^T\vec{\omega}-\vec{y})\mathrm{d}\vec{\omega}^T]"></a>
+
+<p>thus,</p>
+<a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\frac{\partial C}{\partial \vec{\omega}} = X(X^T\vec{\omega}-\vec{y})" data-caption="\frac{\partial C}{\partial \vec{\omega}} = X(X^T\vec{\omega}-\vec{y})" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\frac{\partial C}{\partial \vec{\omega}} = X(X^T\vec{\omega}-\vec{y})" alt="\frac{\partial C}{\partial \vec{\omega}} = X(X^T\vec{\omega}-\vec{y})"></a>
+
+<p>Let <a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;\partial C/\partial \vec{\omega} = 0" data-caption="\partial C/\partial \vec{\omega} = 0" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;\partial C/\partial \vec{\omega} = 0" alt="\partial C/\partial \vec{\omega} = 0"></a>, we can easily solve for <a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;\vec{\omega}^*" data-caption="\vec{\omega}^*" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;\vec{\omega}^*" alt="\vec{\omega}^*"></a>,</p>
+<a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\vec{\omega}^* = (XX^T)^{-1}X\vec{y}" data-caption="\vec{\omega}^* = (XX^T)^{-1}X\vec{y}" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\vec{\omega}^* = (XX^T)^{-1}X\vec{y}" alt="\vec{\omega}^* = (XX^T)^{-1}X\vec{y}"></a>
+
+<p>Notes:<br>To implement linear regression, people usually prefer not to use this equation (known as normal equation of linear regression), because 1) <a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;XX^T" data-caption="XX^T" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;XX^T" alt="XX^T"></a> might not be an invertible matrix; 2) it might be expensive to inverse the matrix. So, people usually try to obtain <a target="_blank" rel="noopener" href="https://latex.codecogs.com/svg.latex?\inline&amp;space;\vec{\omega}^*" data-caption="\vec{\omega}^*" data-fancybox="images"><img src="https://latex.codecogs.com/svg.latex?\inline&amp;space;\vec{\omega}^*" alt="\vec{\omega}^*"></a> by optimizing an initial guess using optimization techniques.</p>
+</body></html>
+
+  
+  <div class="post-guide">
+    <div class="item left">
+        
+          <a href="/2020/02/07/2020-02-07-Pseudopotentials-and-derivatives-in-QE/">Pseudopotentials and their derivatives in Quantum Espresso</a>
+        
+    </div>
+    <div class="item right">
+        
+          <a href="/2019/01/05/2019-01-05-Queue-and-Stack/">Basic Data Structures, Stack and Queue</a>
+        
+    </div>
+  </div>
+
+  
+
+  <div class="post-copyright">
+    <div class="auth">
+      本文作者：<a href="http://yanghan234.github.io">Han Yang</a>
+    </div>
+    <div class="link">
+      永久链接：<a href="http://yanghan234.github.io/2019/11/27/2019-11-27-A-Short-Summary-of-Vector-and-Matrix-Derivative/">http://yanghan234.github.io/2019/11/27/2019-11-27-A-Short-Summary-of-Vector-and-Matrix-Derivative/</a>
+    </div>
+    <div class="declare">
+      版权声明：本文首发于<a href="http://yanghan234.github.io">Han Yang</a>的博客，转载请注明出处！
+    </div>
+  </div>
+
+  <div id="comment"></div>
+
+  
+
+  <div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://yanghan234.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+</article>
+        <footer>
+          <div class="copyright">
+            ©2021
+            <a href="http://yanghan234.github.io">Han Yang</a> Powered by <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> |
+            <a target="_blank" rel="noopener" href="https://github.com/shixiaohu2206/hexo-theme-huhu">hexo-theme-huhu</a>
+          </div>
+          
+        </footer>
+      </div>
+    </div>
+  </body>
+  
+</html>
+<script type="text/javascript">
+                  window.HUHU_CONFIG = JSON.parse("{\"share\":[\"weibo\",\"weixin\",\"qqkongjian\",\"QQ\",\"douban\",\"facebook\",\"twitter\",\"google\"],\"service_worker\":{\"open\":false}}")
+                </script> <script type="text/javascript">window.addEventListener('load', function() {
+    
+    window.loadJs = function(d, m, a) {
+      var c = document.getElementsByTagName('head')[0] || document.head || document.documentElement
+      var b = document.createElement('script')
+      b.defer = true
+      b.setAttribute('type', 'text/javascript')
+      b.setAttribute('charset', 'UTF-8')
+      b.setAttribute('async', 'true')
+      b.setAttribute('src', d)
+      m && b.setAttribute('data-main', '/scripts/app-built')
+      if (typeof a === 'function') {
+        if (window.attachEvent) {
+          b.onreadystatechange = function() {
+            var e = b.readyState
+            if (e === 'loaded' || e === 'complete') {
+              b.onreadystatechange = null
+              a()
+            }
+          }
+        } else {
+          b.onload = a
+        }
+      }
+      c.appendChild(b)
+    }
+    window.loadJs && window.loadJs('https://cdn.bootcss.com/require.js/2.3.6/require.min.js', true, function() {require.config({"paths":{"util":"util","share":"share","search":"search","pagemap":"pagemap.min","registerSW":"registerSW","valine":"cdn/Valine.min","av":["https://cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min"],"pjax":["https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min"],"jquery":["https://cdn.bootcss.com/jquery/3.4.1/jquery.min"],"confirm":["https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min"],"fancybox":["https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min"],"chart":["https://cdn.bootcss.com/Chart.js/2.8.0-rc.1/Chart.bundle.min"]},"map":{"*":{"css":"https://cdn.bootcss.com/require-css/0.1.10/css.min.js"}},"shim":{"fancybox":{"deps":["css!https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css"]},"confirm":{"deps":["css!https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min.css"]},"chart":{"deps":["css!https://cdn.bootcss.com/Chart.js/2.8.0-rc.1/Chart.min.css"]}},"waitSeconds":3})})
+  })</script> <script type="text/javascript">
+                  ;(function() {
+                    var bp = document.createElement('script')
+                    var curProtocol = window.location.protocol.split(':')[0]
+                    if (curProtocol === 'https') {
+                      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'
+                    } else {
+                      bp.src = 'http://push.zhanzhang.baidu.com/push.js'
+                    }
+                    var s = document.getElementsByTagName('script')[0]
+                    s.parentNode.insertBefore(bp, s)
+                  })()
+                </script> 
