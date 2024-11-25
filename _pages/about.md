@@ -2,24 +2,28 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Moto. Etc.
+# subtitle: <a href='#'>Affiliations</a>. Address.   Contacts. Moto. Etc.
+subtitle: Senior Researcher at Microsoft Research AI for Science
 
 profile:
   align: right
-  image: prof_pic.jpg
+  image: personal-photo.jpg
   image_circular: false # crops the image to make it circular
   more_info: >
-    <p>555 your office number</p>
-    <p>123 your address street</p>
-    <p>Your City, State 12345</p>
+    <p><strong>Contact:</strong></p><br>
+    <p>No. 701 Yunjin Rd.,</p><br>
+    <p>Xuihui District, Shanghai, China, 200232</p><br>
+    <p><a href="mailto:hanyang@microsoft.com">hanyang@microsoft.com</a></p>
 
-news: true # includes a list of news items
+news: false # includes a list of news items
 selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
+My academic journey in computational chemistry and materials science began at Nanjing University, where I completed my Bachelor's degree, followed by a Ph.D. in Computational Chemistry from the University of Chicago. During my doctoral studies, I specialized in the GW approximation and electron-phonon interaction. Since 2022, I have been applying this expertise at Microsoft Research AI for Science, where I bridge the domains of computational materials science and artificial intelligence to advance materials discovery.
 
-Put your address / P.O. box / other info right below your picture. You can also disable any of these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically.
+My current research focuses on developing artificial intelligence approaches to accelerate materials design. A key component of this work involves [MatterSim](https://arxiv.org/abs/2405.04967), a multi-modal materials science foundation model that integrates diverse materials data representations. Through this project, we aim to enhance our fundamental understanding of materials while expediting their discovery and optimization.
 
-Link to your social media connections, too. This theme is set up to use [Font Awesome icons](https://fontawesome.com/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.
+My research trajectory reflects my commitment to advancing computational methods in chemistry and materials science. By combining rigorous theoretical training with cutting-edge AI techniques, I strive to push the boundaries of what's possible in materials design and simulation.
+
+Our team at Microsoft Research AI for Science is actively expanding its research frontiers. We welcome talented researchers to join us as full-time scientists or research interns, and we actively pursue academic collaborations worldwide. If you're passionate about advancing the intersection of AI and materials science, please contact me at [hanyang@microsoft.com](mailto:hanyang@microsoft.com).
