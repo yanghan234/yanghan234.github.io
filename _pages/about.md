@@ -27,4 +27,3 @@ My current research focuses on developing artificial intelligence approaches to 
 My research trajectory reflects my commitment to advancing computational methods in chemistry and materials science. By combining rigorous theoretical training with cutting-edge AI techniques, I strive to push the boundaries of what's possible in materials design and simulation.
 
 Our team at Microsoft Research AI for Science is actively expanding its research frontiers. We welcome talented researchers to join us as full-time scientists or research interns, and we actively pursue academic collaborations worldwide. If you're passionate about advancing the intersection of AI and materials science, please contact me at [hanyang@microsoft.com](mailto:hanyang@microsoft.com).
-

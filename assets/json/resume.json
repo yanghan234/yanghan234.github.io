@@ -30,10 +30,7 @@
       "startDate": "2022",
       "endDate": "",
       "summary": "Applying AI to accelerate materials discovery.",
-      "highlights": [
-        "Tech lead for the Materials Design team.",
-        "Developed MatterSim, a materials science foundation model."
-      ]
+      "highlights": ["Tech lead for the Materials Design team.", "Developed MatterSim, a materials science foundation model."]
     }
   ],
   "education": [
@@ -58,6 +55,6 @@
       "endDate": "2016",
       "score": "",
       "courses": []
-    } 
+    }
   ]
 }
