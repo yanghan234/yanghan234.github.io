@@ -12,14 +12,14 @@ related_posts: false
   </a>
 </div>
 
-* Announcement
+- Announcement
 
   We are excited to announce the public release of MatterSim-v1. We eagerly await your feedback after you try out our models.
-  
+
   Our team is continuously working on developing more pre-trained models for MatterSim. Stay tuned for future updates.
 
   If you encounter any issues with our code or are interested in collaboration, please contact me at [hanyang@microsoft.com](mailto:hanyang@microsoft.com).
 
-* Links
-  * Please check out our [github repository](https://github.com/microsoft/mattersim),
-  * and our preprint on [arXiv](https://arxiv.org/abs/2405.04967).
+- Links
+  - Please check out our [github repository](https://github.com/microsoft/mattersim),
+  - and our preprint on [arXiv](https://arxiv.org/abs/2405.04967).
