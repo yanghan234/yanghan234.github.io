@@ -4,6 +4,7 @@ date: 2024-12-03 00:00:00
 title: Releasing MatterSim-v1
 inline: false
 related_posts: false
+giscus_comments: true
 ---
 
 <div style="text-align: center; border: 2px solid #ccc; padding: 10px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); max-width: 420px; margin: 0 auto;">
