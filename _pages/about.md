@@ -13,7 +13,7 @@ profile:
     <p><strong>Contact:</strong></p><br>
     <p>No. 701 Yunjin Rd.,</p><br>
     <p>Xuihui District, Shanghai, China, 200232</p><br>
-    <p><a href="mailto:hanyang@microsoft.com">hanyang@microsoft.com</a></p>
+    <p><a href="mailto:yanghan234@outlook.com">yanghan234@outlook.com</a></p>
 
 news: false # includes a list of news items
 selected_papers: true # includes a list of papers marked as "selected={true}"
@@ -26,4 +26,4 @@ My current research focuses on developing artificial intelligence approaches to 
 
 My research trajectory reflects my commitment to advancing computational methods in chemistry and materials science. By combining rigorous theoretical training with cutting-edge AI techniques, I strive to push the boundaries of what's possible in materials design and simulation.
 
-Our team at Microsoft Research AI for Science is actively expanding its research frontiers. We welcome talented researchers to join us as full-time scientists or research interns, and we actively pursue academic collaborations worldwide. If you're passionate about advancing the intersection of AI and materials science, please contact me at [hanyang@microsoft.com](mailto:hanyang@microsoft.com).
+Our team at Microsoft Research AI for Science is actively expanding its research frontiers. We welcome talented researchers to join us as full-time scientists or research interns, and we actively pursue academic collaborations worldwide. If you're passionate about advancing the intersection of AI and materials science, please contact me at [yanghan234@outlook.com](mailto:yanghan234@outlook.com).
