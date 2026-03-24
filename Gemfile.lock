@@ -223,6 +223,7 @@ DEPENDENCIES
   jekyll-regex-replace
   jekyll-scholar
   jekyll-sitemap
+  nokogiri
   unicode_utils
   webrick
 

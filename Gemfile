@@ -7,6 +7,7 @@ group :jekyll_plugins do
     gem 'jekyll-regex-replace'
     gem 'jekyll-scholar'
     gem 'jekyll-sitemap'
+    gem 'nokogiri'
     gem 'unicode_utils'
     gem 'webrick'
 end
