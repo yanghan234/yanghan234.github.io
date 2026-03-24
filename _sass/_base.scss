@@ -606,15 +606,6 @@ footer.sticky-bottom {
   }
 }
 
-// Distill
-
-.distill {
-  a:hover {
-    border-bottom-color: var(--global-theme-color);
-    text-decoration: none;
-  }
-}
-
 // Projects
 
 .projects {
@@ -1096,10 +1087,6 @@ nav[data-toggle="toc"] {
 .medium-zoom-overlay,
 .medium-zoom-image--opened {
   z-index: 999;
-}
-
-#toc-sidebar {
-  z-index: 1;
 }
 
 .echarts {
