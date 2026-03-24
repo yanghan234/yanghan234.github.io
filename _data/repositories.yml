@@ -1,9 +1,0 @@
-github_users:
-  - yanghan234
-
-repo_description_lines_max: 2
-
-github_repos:
-  - microsoft/mattersim
-  # - materialsproject/emmet
-  # - materialsproject/pymatgen
