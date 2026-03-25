@@ -80,7 +80,7 @@ pinterest_id: # your pinterest id
 publons_id: # your ID on Publons
 quora_username: # your Quora username
 research_gate_profile: # your profile on ResearchGate
-scholar_userid: Asl9CDIAAAAJ # your Google Scholar ID
+scholar_userid: # your Google Scholar ID
 scopus_id: # your profile on Scopus
 semanticscholar_id: # your Semantic Scholar ID
 spotify_id: # your spotify id
@@ -239,7 +239,6 @@ filtered_bibtex_keywords:
     bibtex_show,
     blog,
     code,
-    google_scholar_id,
     html,
     inspirehep_id,
     pdf,
