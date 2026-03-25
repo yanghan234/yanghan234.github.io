@@ -12,7 +12,7 @@ profile:
   more_info: >
     <p><strong>Contact:</strong></p><br>
     <p>No. 701 Yunjin Rd.,</p><br>
-    <p>Xuihui District, Shanghai, China, 200232</p><br>
+    <p>Xuhui District, Shanghai, China, 200232</p><br>
     <p><a href="mailto:yanghan234@outlook.com">yanghan234@outlook.com</a></p>
 
 news: false # includes a list of news items
